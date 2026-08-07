@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Get Your Free Water Test | Clearwell Water</title>
+<meta name="description" content="Request a free water test for your Plymouth, Canton, or Salem Township, MI home.">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<div class="header-perch">
+<header class="site">
+  <div class="nav">
+    <a href="index.html" class="logo">Clearwell Water <small>KNOW YOUR WATER</small></a>
+    <nav class="links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="about.html">About</a>
+      <a href="quote.html">Free Water Test</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="tel:+17343065475" class="nav-phone">(734) 306-5475</a>
+      <a href="quote.html" class="btn btn-primary">Get tested</a>
+    </div>
+  </div>
+</header>
+</div>
+<section>
+  <div class="wrap two-col">
+    <div>
+      <span class="eyebrow">Free, no obligation</span>
+      <h1>Request your free water test.</h1>
+      <p style="color:#41504f;">We come out, test on-site, and give you real numbers. Then we tell you honestly whether you need anything.</p>
+    </div>
+    <div class="form-card">
+      <form id="quoteForm" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+        <input type="hidden" name="subject" value="New free quote request - Clearwell Water">
+        <div class="field"><label>First name</label><input type="text" name="First Name" required></div>
+        <div class="field"><label>Last name</label><input type="text" name="Last Name" required></div>
+        <div class="field"><label>Phone</label><input type="tel" name="Phone" required></div>
+        <div class="field"><label>Email</label><input type="email" name="Email" required></div>
+        <div class="field"><label>Property address</label><input type="text" name="Address" required></div>
+        <div class="field"><label>Water source</label>
+          <select name="Water Source">
+            <option>City / municipal water</option>
+            <option>Private well</option>
+          </select>
+        </div>
+        <div class="field"><label>What are you noticing? (optional)</label><textarea name="Notes" rows="3"></textarea></div>
+        <button type="submit" class="btn btn-teal" style="width:100%; justify-content:center; border:none; cursor:pointer;">Request my free test</button>
+      </form>
+    </div>
+  </div>
+</section>
+<footer class="site">
+  <div class="wrap foot-bottom">
+    <span>&copy; 2026 Clearwell Water. Plymouth, MI.</span>
+    <span>(734) 306-5475</span>
+  </div>
+</footer>
+<script src="assets/main.js"></script>
+</body>
+</html>
