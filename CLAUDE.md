@@ -20,13 +20,15 @@ where the site lives or how to deploy — it's this folder, and the command is a
 
 ## Open item that needs the user (important)
 
-**The forms don't work yet.** `contact.html` and `quote.html` post to Web3Forms, but
-the access key is still the placeholder `YOUR_ACCESS_KEY_HERE`. Submissions fail, so
-every lead is lost. To fix: get a free key at https://web3forms.com (it's emailed to
-you — no account needed), then replace the placeholder in both files:
+**The forms don't work yet.** `book.html`, `contact.html`, and `quote.html` post to
+Web3Forms, but the access key is still the placeholder `YOUR_ACCESS_KEY_HERE`.
+Submissions fail, so every booking and every lead is lost. This is the single most
+important open item — the booking wizard looks fully functional to a visitor and
+silently isn't. To fix: get a free key at https://web3forms.com (it's emailed to you
+— no account needed), then replace the placeholder in all three files:
 
 ```bash
-sed -i 's/YOUR_ACCESS_KEY_HERE/<the-real-key>/g' contact.html quote.html
+sed -i 's/YOUR_ACCESS_KEY_HERE/<the-real-key>/g' book.html contact.html quote.html
 ```
 
 Until that's done, the phone number is the only working way to reach the business.
@@ -64,8 +66,13 @@ Clearwell Water Filtration — residential water treatment.
   homepage changes.
 - `services.html`, `about.html`, `quote.html`, `contact.html` — subpages. These DO
   use `assets/styles.css` and `assets/main.js`.
-- `quote.html` is the "Free Water Test" page. There is no `water-test.html` — links
-  must point at `quote.html`.
+- `book.html` — the booking wizard, and the site's main call to action. Self-contained
+  (own `<style>` and `<script>`). Five steps: name/phone → well vs city water →
+  service → address + date → review → sent. Validation blocks each step until it's
+  filled, past dates are rejected, and it POSTs to Web3Forms via `fetch`. All nav
+  links and primary CTAs point here.
+- `quote.html` — the older free-water-test form. Still live, but nothing links to it
+  anymore now that `book.html` covers it. There is no `water-test.html`.
 - `services.html` has anchor ids `#softener`, `#filtration`, `#ro`, `#well`, which the
   homepage footer links to. Keep them if you restructure that page.
 - `CNAME` — holds the custom domain. Do not delete; removing it unbinds the domain.

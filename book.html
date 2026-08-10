@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book Water Treatment in Plymouth, Canton &amp; Salem Township | Clearwell Water</title>
+<meta name="description" content="Book a water softener, filtration, or well water treatment install for your Plymouth, Canton, or Salem Township MI home — or start with a free water test. Pick your own date.">
+<link rel="canonical" href="https://clearwellwaterfiltration.com/book.html">
+<meta property="og:title" content="Book Your Water Treatment | Clearwell Water">
+<meta property="og:description" content="Pick your service and your date in a few easy steps. Free water test available, or book an install directly.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://clearwellwaterfiltration.com/book.html">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap');
+
+:root{
+  --slate:#1F3B4D;
+  --slate-deep:#152A37;
+  --stone:#C9BBA0;
+  --stone-light:#E4DBC8;
+  --teal:#4A9B8E;
+  --teal-deep:#3A7E73;
+  --bone:#F2EEE6;
+  --bone-white:#FBFAF7;
+  --ink:#232323;
+  --clay:#B0603F;
+  --line: rgba(31,59,77,0.14);
+  --max: 1180px;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; background:var(--bone); color:var(--ink);
+  font-family:'Inter', sans-serif; font-size:16px; line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:'Fraunces', serif; font-weight:500; color:var(--slate); line-height:1.12; margin:0 0 .5em; letter-spacing:-.01em;}
+p{margin:0 0 1em;}
+a{color:inherit;}
+.wrap{max-width:var(--max); margin:0 auto; padding:0 28px;}
+
+/* ---------- Header ---------- */
+header.site{background:var(--slate-deep); position:sticky; top:0; z-index:50;}
+header.site .nav{max-width:var(--max); margin:0 auto; padding:14px 28px; display:flex; align-items:center; gap:22px;}
+.logo{font-family:'Fraunces',serif; font-size:19px; color:var(--bone-white); text-decoration:none; display:flex; flex-direction:column; line-height:1.1;}
+.logo small{font-family:'Inter',sans-serif; font-size:9.5px; letter-spacing:.18em; color:var(--stone); font-weight:600;}
+.links{display:flex; gap:20px; margin-left:auto;}
+.links a{color:#cfdad8; text-decoration:none; font-size:14px;}
+.links a:hover, .links a.active{color:var(--bone-white);}
+.nav-phone{color:var(--stone-light); text-decoration:none; font-size:14px; font-weight:600; white-space:nowrap;}
+
+/* ---------- Progress rail ---------- */
+.rail{background:var(--slate); border-top:1px solid rgba(255,255,255,.08);}
+.rail-inner{max-width:var(--max); margin:0 auto; padding:0 28px; display:flex; gap:6px;}
+.rail-step{flex:1; padding:11px 4px 12px; text-align:center; position:relative;}
+.rail-step span{
+  font-size:11px; letter-spacing:.11em; text-transform:uppercase; font-weight:600;
+  color:rgba(228,219,200,.45); transition:color .25s ease;
+}
+.rail-step::after{
+  content:""; position:absolute; left:0; right:0; bottom:0; height:3px;
+  background:rgba(255,255,255,.1); transition:background .3s ease;
+}
+.rail-step.done span{color:rgba(228,219,200,.8);}
+.rail-step.done::after{background:var(--teal-deep);}
+.rail-step.active span{color:var(--bone-white);}
+.rail-step.active::after{background:var(--teal);}
+
+/* ---------- Stage ---------- */
+.stage{max-width:640px; margin:0 auto; padding:56px 28px 90px; min-height:60vh;}
+.step{display:none; animation:rise .38s cubic-bezier(.2,.7,.3,1) both;}
+.step.on{display:block;}
+@keyframes rise{from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:none;}}
+
+.eyebrow{font-size:12.5px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--teal-deep); display:block; margin-bottom:10px;}
+.step h2{font-size:clamp(27px,4.4vw,38px);}
+.step .sub{color:#5a6a68; font-size:16.5px; margin-bottom:30px;}
+
+/* ---------- Fields ---------- */
+.field{margin-bottom:18px;}
+.field label{display:block; font-size:13.5px; font-weight:600; color:var(--slate); margin-bottom:6px;}
+.field input, .field select, .field textarea{
+  width:100%; padding:13px 15px; font-family:inherit; font-size:16px; color:var(--ink);
+  background:var(--bone-white); border:1px solid var(--line); border-radius:8px; outline:none;
+  transition:border-color .18s ease, box-shadow .18s ease;
+}
+.field input:focus, .field select:focus, .field textarea:focus{
+  border-color:var(--teal); box-shadow:0 0 0 3px rgba(74,155,142,.16);
+}
+.field textarea{min-height:96px; resize:vertical;}
+.field .hint{font-size:12.5px; color:#77837f; margin-top:5px;}
+.two{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+@media(max-width:560px){.two{grid-template-columns:1fr;}}
+
+/* ---------- Choice cards ---------- */
+.choices{display:grid; gap:12px; margin-bottom:8px;}
+.choice{
+  display:flex; align-items:flex-start; gap:14px; padding:17px 18px; cursor:pointer;
+  background:var(--bone-white); border:1.5px solid var(--line); border-radius:10px;
+  transition:border-color .18s ease, box-shadow .18s ease, transform .12s ease;
+}
+.choice:hover{border-color:var(--teal); transform:translateY(-1px);}
+.choice input{position:absolute; opacity:0; pointer-events:none;}
+.choice .box{
+  flex:none; width:20px; height:20px; margin-top:2px; border-radius:50%;
+  border:1.5px solid #b9c4c2; position:relative; transition:border-color .18s ease;
+}
+.choice .box::after{
+  content:""; position:absolute; inset:4px; border-radius:50%; background:var(--teal);
+  transform:scale(0); transition:transform .18s cubic-bezier(.3,1.4,.5,1);
+}
+.choice input:checked ~ .box{border-color:var(--teal);}
+.choice input:checked ~ .box::after{transform:scale(1);}
+.choice:has(input:checked){border-color:var(--teal); box-shadow:0 0 0 3px rgba(74,155,142,.13);}
+.choice .txt strong{display:block; font-size:15.5px; color:var(--slate); font-weight:600; margin-bottom:2px;}
+.choice .txt small{display:block; font-size:13.5px; color:#66736f; line-height:1.45;}
+.choice .tagline{
+  display:inline-block; margin-top:7px; font-size:11px; font-weight:600; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--teal-deep); background:rgba(74,155,142,.11);
+  padding:3px 9px; border-radius:20px;
+}
+
+/* ---------- Buttons ---------- */
+.actions{display:flex; align-items:center; gap:12px; margin-top:30px;}
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  padding:14px 26px; border:0; border-radius:40px; cursor:pointer;
+  font-family:inherit; font-size:15px; font-weight:600; text-decoration:none;
+  transition:background .2s ease, transform .12s ease, opacity .2s ease;
+}
+.btn-teal{background:var(--teal-deep); color:#fff;}
+.btn-teal:hover{background:#316d63; transform:translateY(-1px);}
+.btn-ghost{background:transparent; color:#5a6a68; padding:14px 8px;}
+.btn-ghost:hover{color:var(--slate);}
+.err{color:var(--clay); font-size:13.5px; margin-top:12px; display:none;}
+.err.on{display:block;}
+
+/* ---------- Review ---------- */
+.review{background:var(--bone-white); border:1px solid var(--line); border-radius:12px; padding:6px 20px; margin-bottom:22px;}
+.review .row{display:flex; justify-content:space-between; gap:18px; padding:13px 0; border-bottom:1px solid var(--line); font-size:14.5px;}
+.review .row:last-child{border-bottom:0;}
+.review .row dt{color:#6b7773; flex:none;}
+.review .row dd{margin:0; text-align:right; color:var(--slate); font-weight:600;}
+
+/* ---------- Done ---------- */
+.done{text-align:center; padding:26px 0;}
+.done .mark{
+  width:62px; height:62px; margin:0 auto 22px; border-radius:50%;
+  background:rgba(74,155,142,.13); color:var(--teal-deep);
+  display:flex; align-items:center; justify-content:center; font-size:29px;
+}
+.callout{
+  background:var(--slate); color:var(--bone-white); border-radius:12px;
+  padding:20px 22px; margin-top:26px; text-align:left;
+}
+.callout strong{color:#fff;}
+.callout a{color:var(--stone-light); font-weight:600;}
+
+footer.site{background:var(--slate-deep); color:#c7d2d0; margin-top:40px;}
+footer.site .foot{max-width:var(--max); margin:0 auto; padding:26px 28px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; font-size:13.5px;}
+footer.site a{color:var(--stone-light); text-decoration:none;}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="nav">
+    <a href="index.html" class="logo">Clearwell Water <small>KNOW YOUR WATER</small></a>
+    <nav class="links">
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="about.html">About</a>
+      <a href="book.html" class="active">Book</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <a href="tel:+17343065475" class="nav-phone">(734) 306-5475</a>
+  </div>
+</header>
+
+<div class="rail">
+  <div class="rail-inner" id="rail">
+    <div class="rail-step active" data-stage="0"><span>Start</span></div>
+    <div class="rail-step" data-stage="1"><span>Your water</span></div>
+    <div class="rail-step" data-stage="2"><span>Service</span></div>
+    <div class="rail-step" data-stage="3"><span>Address &amp; date</span></div>
+    <div class="rail-step" data-stage="4"><span>Finish</span></div>
+  </div>
+</div>
+
+<div class="stage">
+  <form id="bookForm" action="https://api.web3forms.com/submit" method="POST" novalidate>
+    <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+    <input type="hidden" name="subject" value="New booking request - Clearwell Water">
+    <input type="hidden" name="from_name" value="Clearwell Water website">
+
+    <!-- 0 -->
+    <section class="step on" data-step="0" data-stage="0">
+      <span class="eyebrow">Book in a few easy steps</span>
+      <h2>Let's get your water sorted.</h2>
+      <p class="sub">A few quick questions and you can pick your own date. If you'd rather just talk to someone, call <a href="tel:+17343065475" style="color:var(--teal-deep); font-weight:600;">(734) 306-5475</a>.</p>
+      <div class="field">
+        <label for="fname">Your name</label>
+        <input type="text" id="fname" name="Name" placeholder="First and last name" autocomplete="name">
+      </div>
+      <div class="two">
+        <div class="field">
+          <label for="fphone">Phone</label>
+          <input type="tel" id="fphone" name="Phone" placeholder="(734) 555-0123" autocomplete="tel">
+        </div>
+        <div class="field">
+          <label for="femail">Email <span style="font-weight:400; color:#8a938f;">(optional)</span></label>
+          <input type="email" id="femail" name="Email" placeholder="you@example.com" autocomplete="email">
+        </div>
+      </div>
+      <div class="actions">
+        <button type="button" class="btn btn-teal" data-next>Continue</button>
+      </div>
+      <p class="err" data-err>Please add your name and a phone number so we can reach you.</p>
+    </section>
+
+    <!-- 1 -->
+    <section class="step" data-step="1" data-stage="1">
+      <span class="eyebrow">Step 2</span>
+      <h2>Where does your water come from?</h2>
+      <p class="sub">This changes what we test for &mdash; and what you're likely to need.</p>
+      <div class="choices">
+        <label class="choice">
+          <input type="radio" name="Water Source" value="Private well"><span class="box"></span>
+          <span class="txt"><strong>A private well</strong>
+            <small>Nobody tests a private well but you. Iron, sulfur, coliform bacteria, nitrates and arsenic are all on the table.</small>
+            <span class="tagline">Our specialty</span>
+          </span>
+        </label>
+        <label class="choice">
+          <input type="radio" name="Water Source" value="City / municipal water"><span class="box"></span>
+          <span class="txt"><strong>City water</strong>
+            <small>Plymouth, Canton and Northville are on GLWA municipal water. It's safe to drink &mdash; hardness and chlorine taste are the usual complaints.</small>
+          </span>
+        </label>
+        <label class="choice">
+          <input type="radio" name="Water Source" value="Not sure"><span class="box"></span>
+          <span class="txt"><strong>I'm not sure</strong>
+            <small>No problem at all &mdash; we'll figure it out when we come out.</small>
+          </span>
+        </label>
+      </div>
+      <div class="actions">
+        <button type="button" class="btn btn-teal" data-next>Continue</button>
+        <button type="button" class="btn btn-ghost" data-back>Back</button>
+      </div>
+      <p class="err" data-err>Pick one so we know what to bring.</p>
+    </section>
+
+    <!-- 2 -->
+    <section class="step" data-step="2" data-stage="2">
+      <span class="eyebrow">Step 3</span>
+      <h2>What are we booking?</h2>
+      <p class="sub">Already know what you want? Book it directly &mdash; you don't have to do the test first.</p>
+      <div class="choices">
+        <label class="choice">
+          <input type="radio" name="Service" value="Free water test"><span class="box"></span>
+          <span class="txt"><strong>Free water test</strong>
+            <small>We come out, test on-site, and give you real numbers. If you don't need anything, we'll say so.</small>
+            <span class="tagline">$0 &mdash; no obligation</span>
+          </span>
+        </label>
+        <label class="choice">
+          <input type="radio" name="Service" value="Water softener install"><span class="box"></span>
+          <span class="txt"><strong>Water softener</strong>
+            <small>Stops scale on fixtures, glassware and water heaters. The fix behind most calls we get.</small>
+            <span class="tagline">$2,000&ndash;3,500 installed</span>
+          </span>
+        </label>
+        <label class="choice">
+          <input type="radio" name="Service" value="Whole-home filtration install"><span class="box"></span>
+          <span class="txt"><strong>Whole-home filtration</strong>
+            <small>Cuts chlorine taste, odor and sediment at every tap. Often paired with a softener.</small>
+            <span class="tagline">$1,000&ndash;4,500 installed</span>
+          </span>
+        </label>
+        <label class="choice">
+          <input type="radio" name="Service" value="Under-sink RO install"><span class="box"></span>
+          <span class="txt"><strong>Under-sink RO</strong>
+            <small>Best-tasting drinking water at the kitchen faucet. An add-on, not a softener replacement.</small>
+            <span class="tagline">$300&ndash;2,500 installed</span>
+          </span>
+        </label>
+        <label class="choice">
+          <input type="radio" name="Service" value="Well water treatment"><span class="box"></span>
+          <span class="txt"><strong>Well water treatment</strong>
+            <small>Iron, sulfur and bacteria, sized around your actual test result rather than a guess.</small>
+            <span class="tagline">$3,000&ndash;8,000+ bundled</span>
+          </span>
+        </label>
+        <label class="choice">
+          <input type="radio" name="Service" value="Not sure yet"><span class="box"></span>
+          <span class="txt"><strong>Not sure yet</strong>
+            <small>Start with the free test and we'll tell you what &mdash; if anything &mdash; you actually need.</small>
+          </span>
+        </label>
+      </div>
+      <div class="actions">
+        <button type="button" class="btn btn-teal" data-next>Continue</button>
+        <button type="button" class="btn btn-ghost" data-back>Back</button>
+      </div>
+      <p class="err" data-err>Choose what you'd like booked.</p>
+    </section>
+
+    <!-- 3 -->
+    <section class="step" data-step="3" data-stage="3">
+      <span class="eyebrow">Step 4</span>
+      <h2>Where and when?</h2>
+      <p class="sub">Pick the day that suits you. We'll confirm the exact window by phone.</p>
+      <div class="field">
+        <label for="faddr">Street address</label>
+        <input type="text" id="faddr" name="Address" placeholder="1234 Ann Arbor Rd" autocomplete="street-address">
+      </div>
+      <div class="two">
+        <div class="field">
+          <label for="fcity">City / township</label>
+          <select id="fcity" name="City">
+            <option value="">Choose one…</option>
+            <option>Plymouth</option>
+            <option>Canton</option>
+            <option>Salem Township</option>
+            <option>Northville</option>
+            <option>Livonia</option>
+            <option>Novi</option>
+            <option>South Lyon</option>
+            <option>Somewhere else nearby</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="fzip">ZIP</label>
+          <input type="text" id="fzip" name="ZIP" placeholder="48170" inputmode="numeric" autocomplete="postal-code">
+        </div>
+      </div>
+      <div class="two">
+        <div class="field">
+          <label for="fdate">Preferred date</label>
+          <input type="date" id="fdate" name="Preferred Date">
+        </div>
+        <div class="field">
+          <label for="ftime">Preferred time</label>
+          <select id="ftime" name="Preferred Time">
+            <option value="">Choose one…</option>
+            <option>Morning (8am&ndash;12pm)</option>
+            <option>Afternoon (12pm&ndash;4pm)</option>
+            <option>Late afternoon (4pm&ndash;6pm)</option>
+            <option>I'm flexible</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="fnotes">Anything we should know? <span style="font-weight:400; color:#8a938f;">(optional)</span></label>
+        <textarea id="fnotes" name="Notes" placeholder="Rotten-egg smell, orange staining in the tub, recent well work…"></textarea>
+      </div>
+      <div class="actions">
+        <button type="button" class="btn btn-teal" data-next>Review</button>
+        <button type="button" class="btn btn-ghost" data-back>Back</button>
+      </div>
+      <p class="err" data-err>We need an address, city and a preferred date.</p>
+    </section>
+
+    <!-- 4 -->
+    <section class="step" data-step="4" data-stage="4">
+      <span class="eyebrow">Last look</span>
+      <h2>Does this look right?</h2>
+      <p class="sub">Send it over and we'll call to confirm your window. Nothing is charged online.</p>
+      <dl class="review" id="review"></dl>
+      <div class="actions">
+        <button type="submit" class="btn btn-teal">Request this booking</button>
+        <button type="button" class="btn btn-ghost" data-back>Back</button>
+      </div>
+    </section>
+
+    <!-- 5 -->
+    <section class="step" data-step="5" data-stage="4">
+      <div class="done">
+        <div class="mark">&#10003;</div>
+        <h2>Booking request sent.</h2>
+        <p class="sub">We'll call within one business day to confirm your date and time window.</p>
+        <div class="callout">
+          <p style="margin:0;"><strong>Something urgent?</strong> Active odor, discolored water, or a health concern &mdash; don't wait on us to call. Ring <a href="tel:+17343065475">(734) 306-5475</a> and we'll move you up.</p>
+        </div>
+      </div>
+    </section>
+  </form>
+</div>
+
+<footer class="site">
+  <div class="foot">
+    <span>&copy; 2026 Clearwell Water. Plymouth, MI.</span>
+    <span><a href="tel:+17343065475">(734) 306-5475</a></span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var form   = document.getElementById('bookForm');
+  var steps  = Array.prototype.slice.call(form.querySelectorAll('.step'));
+  var rail   = document.getElementById('rail');
+  var rSteps = Array.prototype.slice.call(rail.querySelectorAll('.rail-step'));
+  var at     = 0;
+
+  // Don't let anyone book a date in the past.
+  var date = document.getElementById('fdate');
+  var today = new Date();
+  date.min = today.toISOString().split('T')[0];
+
+  function paintRail(stage) {
+    rSteps.forEach(function (el, i) {
+      el.classList.toggle('active', i === stage);
+      el.classList.toggle('done', i < stage);
+    });
+  }
+
+  function show(i) {
+    steps[at].classList.remove('on');
+    steps[i].classList.add('on');
+    at = i;
+    paintRail(+steps[i].dataset.stage);
+    var y = rail.getBoundingClientRect().bottom + window.scrollY;
+    if (window.scrollY > y) window.scrollTo({ top: y - 20, behavior: 'smooth' });
+  }
+
+  function val(id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; }
+  function picked(name) {
+    var el = form.querySelector('input[name="' + name + '"]:checked');
+    return el ? el.value : '';
+  }
+
+  // What has to be filled in before each step will let you move on.
+  function missing(i) {
+    if (i === 0) return !val('fname') || !val('fphone');
+    if (i === 1) return !picked('Water Source');
+    if (i === 2) return !picked('Service');
+    if (i === 3) return !val('faddr') || !val('fcity') || !val('fdate');
+    return false;
+  }
+
+  function prettyDate(iso) {
+    if (!iso) return '';
+    var p = iso.split('-');
+    var d = new Date(+p[0], +p[1] - 1, +p[2]);   // local, not UTC — avoids off-by-one
+    return d.toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric', year:'numeric' });
+  }
+
+  function buildReview() {
+    var rows = [
+      ['Name',    val('fname')],
+      ['Phone',   val('fphone')],
+      ['Email',   val('femail')],
+      ['Water',   picked('Water Source')],
+      ['Service', picked('Service')],
+      ['Address', [val('faddr'), val('fcity'), val('fzip')].filter(Boolean).join(', ')],
+      ['Date',    prettyDate(val('fdate'))],
+      ['Time',    val('ftime')],
+      ['Notes',   val('fnotes')]
+    ];
+    document.getElementById('review').innerHTML = rows
+      .filter(function (r) { return r[1]; })
+      .map(function (r) {
+        var safe = String(r[1]).replace(/[&<>"]/g, function (c) {
+          return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c];
+        });
+        return '<div class="row"><dt>' + r[0] + '</dt><dd>' + safe + '</dd></div>';
+      }).join('');
+  }
+
+  form.addEventListener('click', function (e) {
+    var next = e.target.closest('[data-next]');
+    var back = e.target.closest('[data-back]');
+    if (!next && !back) return;
+
+    var step = e.target.closest('.step');
+    var err  = step.querySelector('[data-err]');
+
+    if (next) {
+      if (missing(at)) { if (err) err.classList.add('on'); return; }
+      if (err) err.classList.remove('on');
+      if (at === 3) buildReview();
+      show(at + 1);
+    } else {
+      show(at - 1);
+    }
+  });
+
+  // Enter should advance, not submit early.
+  form.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA' && at < 4) {
+      e.preventDefault();
+      var btn = steps[at].querySelector('[data-next]');
+      if (btn) btn.click();
+    }
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var btn = form.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    fetch(form.action, { method:'POST', body:new FormData(form) })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (data.success) { show(5); }
+        else { throw new Error(data.message || 'Submit failed'); }
+      })
+      .catch(function () {
+        btn.disabled = false;
+        btn.textContent = 'Request this booking';
+        var err = steps[4].querySelector('[data-err]') || (function () {
+          var p = document.createElement('p');
+          p.className = 'err';
+          steps[4].appendChild(p);
+          return p;
+        })();
+        err.textContent = "That didn't go through. Please call (734) 306-5475 and we'll book you over the phone.";
+        err.classList.add('on');
+      });
+  });
+})();
+</script>
+</body>
+</html>
