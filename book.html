@@ -95,8 +95,10 @@ header.site .nav{max-width:var(--max); margin:0 auto; padding:14px 28px; display
 .stage.wide{max-width:1080px;}
 .step{display:none; text-align:center;}
 .step.on{display:block;}
-.step.on.fwd{animation:slideFwd .44s cubic-bezier(.22,.68,.28,1) both;}
-.step.on.rev{animation:slideRev .44s cubic-bezier(.22,.68,.28,1) both;}
+/* No fill-mode on purpose: the resting position must never depend on the
+   animation finishing, or a dropped frame leaves the step shifted and clipped. */
+.step.on.fwd{animation:slideFwd .44s cubic-bezier(.22,.68,.28,1);}
+.step.on.rev{animation:slideRev .44s cubic-bezier(.22,.68,.28,1);}
 @keyframes slideFwd{from{opacity:0; transform:translateX(52px);} to{opacity:1; transform:none;}}
 @keyframes slideRev{from{opacity:0; transform:translateX(-52px);} to{opacity:1; transform:none;}}
 @media (prefers-reduced-motion: reduce){
@@ -703,8 +705,9 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
     var back = i < at;
     steps[at].classList.remove('on', 'fwd', 'rev');
     steps[i].classList.remove('fwd', 'rev');
-    void steps[i].offsetWidth;                     // restart the animation
-    steps[i].classList.add('on', back ? 'rev' : 'fwd');
+    steps[i].classList.add('on');                  // visible first...
+    void steps[i].offsetWidth;                     // ...then reflow, so the
+    steps[i].classList.add(back ? 'rev' : 'fwd');  // animation actually starts
     at = i;
     stage.classList.toggle('wide', steps[i].hasAttribute('data-wide'));
     paintRail(+steps[i].dataset.stage);
