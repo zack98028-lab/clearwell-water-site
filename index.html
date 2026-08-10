@@ -114,6 +114,7 @@ nav.links a.active,nav.links a:hover{color:var(--teal-deep);}
 .nav-cta .btn-primary{border-radius:40px; padding:12px 22px;}
 .burger{display:none; background:none; border:none; cursor:pointer; padding:6px;}
 .burger span{display:block; width:22px; height:2px; background:var(--slate); margin:5px 0;}
+.nav-call{display:none;}
 
 .announce{max-width:calc(var(--max) - 40px); margin:12px auto 0; background:var(--slate); border-radius:40px; padding:11px 26px; display:flex; align-items:center; justify-content:center; gap:10px;}
 .announce span{color:var(--bone-white); font-size:13px; font-weight:500;}
@@ -255,14 +256,20 @@ fieldset legend{font-size:13px; font-weight:600; color:var(--slate); padding:0 6
 }
   @media (max-width: 720px){
   .harm-grid{grid-template-columns:1fr;}
+  /* display toggle, not transform: a stuck transition must never be able
+     to leave the menu unreachable on a phone */
   nav.links{
-    position:fixed; inset:64px 0 0 0; background:var(--bone); flex-direction:column;
-    align-items:flex-start; padding:28px; gap:22px; transform:translateX(100%);
-    transition:transform .25s ease; border-top:1px solid var(--line);
+    display:none;
+    position:fixed; inset:64px 0 auto 0; background:var(--bone); flex-direction:column;
+    align-items:stretch; padding:10px 0 18px; gap:0; z-index:60;
+    border-top:1px solid var(--line); box-shadow:0 18px 40px rgba(21,42,55,.16);
   }
-  nav.links.open{transform:translateX(0);}
+  nav.links.open{display:flex; animation:navDrop .22s ease both;}
+  nav.links a{padding:14px 28px; width:100%; font-size:16px;}
+  @keyframes navDrop{from{opacity:0; transform:translateY(-8px);} to{opacity:1; transform:none;}}
   .burger{display:block;}
   .nav-phone{display:none;}
+  .nav-call{display:block; color:var(--teal-deep); font-weight:600;}
   .field-row{grid-template-columns:1fr;}
   .foot-grid{grid-template-columns:1fr 1fr;}
 }
@@ -310,6 +317,7 @@ fieldset legend{font-size:13px; font-weight:600; color:var(--slate); padding:0 6
       <a href="about.html">About</a>
       <a href="book.html">Free Quote</a>
       <a href="contact.html">Contact</a>
+      <a href="tel:+17343065475" class="nav-call">Call (734) 306-5475</a>
     </nav>
     <div class="nav-cta">
       <a href="tel:+17343065475" class="nav-phone">(734) 306-5475</a>
