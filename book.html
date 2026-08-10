@@ -34,11 +34,12 @@ body{
   font-family:'Inter', sans-serif; font-size:16px; line-height:1.55;
   -webkit-font-smoothing:antialiased;
 }
-/* Faint plumbing motif behind everything — droplet, faucet, cartridge, ripple. */
+/* Water-treatment motif behind everything: filter cartridge, droplet,
+   faucet, softener tank, ripple — scattered at angles, like a watermark. */
 body::before{
-  content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.42;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Cg fill='none' stroke='%231F3B4D' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round' opacity='0.07'%3E%3Cpath d='M46 26c8 11 15 19 15 27a15 15 0 0 1-30 0c0-8 7-16 15-27z'/%3E%3Cpath d='M150 40h26a7 7 0 0 1 7 7v9'/%3E%3Cpath d='M183 62v9'/%3E%3Cpath d='M150 40v-8h-10'/%3E%3Cpath d='M36 150h22a8 8 0 0 1 8 8v34a8 8 0 0 1-8 8H36a8 8 0 0 1-8-8v-34a8 8 0 0 1 8-8z'/%3E%3Cpath d='M28 166h38M28 184h38'/%3E%3Cpath d='M42 142v8M52 142v8'/%3E%3Cpath d='M140 170q11-10 22 0t22 0'/%3E%3Cpath d='M140 188q11-10 22 0t22 0'/%3E%3Cpath d='M206 120c5 7 9 12 9 17a9 9 0 0 1-18 0c0-5 4-10 9-17z'/%3E%3Cpath d='M92 96c5 7 9 12 9 17a9 9 0 0 1-18 0c0-5 4-10 9-17z'/%3E%3C/g%3E%3C/svg%3E");
-  background-size:260px 260px;
+  content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320' viewBox='0 0 320 320'%3E%3Cg fill='none' stroke='%231F3B4D' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round' opacity='0.14'%3E%3Cg transform='translate(26 20) rotate(-16)'%3E%3Cpath d='M10 16h30v60a11 11 0 0 1-11 11H21a11 11 0 0 1-11-11z'/%3E%3Cpath d='M17 4h16v12H17z'/%3E%3Cpath d='M10 38h30M10 58h30'/%3E%3C/g%3E%3Cg transform='translate(214 26) rotate(14)'%3E%3Cpath d='M19 4c10 14 17 24 17 33a17 17 0 0 1-34 0c0-9 7-19 17-33z'/%3E%3C/g%3E%3Cg transform='translate(24 196) rotate(9)'%3E%3Cpath d='M4 12h36a11 11 0 0 1 11 11v15'/%3E%3Cpath d='M51 44v11'/%3E%3Cpath d='M4 12V3'/%3E%3Cpath d='M45 68c3 5 6 8 6 11a6 6 0 0 1-12 0c0-3 3-6 6-11z'/%3E%3C/g%3E%3Cg transform='translate(206 186) rotate(-11)'%3E%3Cpath d='M9 27a24 24 0 0 1 48 0v50a11 11 0 0 1-11 11H20A11 11 0 0 1 9 77z'/%3E%3Cpath d='M26 6h14v12H26z'/%3E%3Cpath d='M9 58h48'/%3E%3C/g%3E%3Cg transform='translate(126 122) rotate(-4)'%3E%3Cpath d='M0 9q11-10 22 0t22 0'/%3E%3Cpath d='M0 25q11-10 22 0t22 0'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background-size:320px 320px;
 }
 header.site, .rail, .stage, footer.site{position:relative; z-index:1;}
 h1,h2,h3,h4{font-family:'Fraunces', serif; font-weight:500; color:var(--slate); line-height:1.12; margin:0 0 .5em; letter-spacing:-.01em;}
@@ -222,18 +223,54 @@ header.site .nav{max-width:var(--max); margin:0 auto; padding:14px 28px; display
 .pill.on{background:var(--slate); border-color:var(--slate); color:#fff;}
 .pill.on.multi{background:var(--teal-deep); border-color:var(--teal-deep);}
 
+/* ---------- Date strip &amp; time slots ---------- */
+.daystrip{
+  display:flex; gap:10px; overflow-x:auto; padding:4px 2px 14px;
+  max-width:440px; margin:0 auto; scroll-snap-type:x proximity;
+}
+.daystrip::-webkit-scrollbar{height:6px;}
+.daystrip::-webkit-scrollbar-thumb{background:#d8d2c4; border-radius:10px;}
+.day{
+  flex:none; min-width:84px; scroll-snap-align:start; cursor:pointer;
+  border:1.5px solid var(--line); background:var(--bone-white); border-radius:14px;
+  padding:12px 10px; font-family:inherit; text-align:center;
+  transition:background .16s ease, border-color .16s ease, transform .12s ease;
+}
+.day:hover{border-color:var(--teal); transform:translateY(-1px);}
+.day .dow{display:block; font-size:12.5px; color:#828c88;}
+.day .dnum{display:block; font-size:15.5px; font-weight:700; color:var(--slate); margin-top:3px;}
+.day.on{background:var(--slate); border-color:var(--slate);}
+.day.on .dow{color:rgba(255,255,255,.72);}
+.day.on .dnum{color:#fff;}
+
+.slots{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; max-width:440px; margin:0 auto;}
+@media(max-width:520px){.slots{grid-template-columns:repeat(2,1fr);}}
+.slot{
+  border:1.5px solid var(--line); background:var(--bone-white); border-radius:12px;
+  padding:13px 6px; font-family:inherit; font-size:14.5px; color:var(--slate); cursor:pointer;
+  transition:background .16s ease, border-color .16s ease;
+}
+.slot:hover{border-color:var(--teal);}
+.slot.on{background:var(--slate); border-color:var(--slate); color:#fff;}
+
 /* ---------- Buttons ---------- */
-.actions{max-width:440px; margin:34px auto 0;}
+.actions{
+  display:flex; flex-direction:row-reverse; gap:12px;
+  max-width:440px; margin:34px auto 0;
+}
 .btn{
-  display:block; width:100%; padding:16px 26px; border:0; border-radius:40px; cursor:pointer;
+  display:block; padding:16px 26px; border:0; border-radius:40px; cursor:pointer;
   font-family:inherit; font-size:16px; font-weight:600; text-decoration:none; text-align:center;
   transition:background .2s ease, transform .12s ease, opacity .2s ease;
 }
-.btn-teal{background:var(--slate); color:#fff;}
+.btn-teal{background:var(--slate); color:#fff; flex:1;}
 .btn-teal:hover{background:var(--slate-deep); transform:translateY(-1px);}
 .btn-teal:disabled{opacity:.6; cursor:default; transform:none;}
-.btn-ghost{background:transparent; color:#6b7773; margin-top:12px; font-size:14.5px; font-weight:500;}
-.btn-ghost:hover{color:var(--slate);}
+.btn-ghost{
+  flex:none; background:rgba(31,59,77,.07); color:var(--slate);
+  font-size:15px; font-weight:600; padding:16px 22px;
+}
+.btn-ghost:hover{background:rgba(31,59,77,.13);}
 .err{color:var(--clay); font-size:14px; margin:16px auto 0; max-width:440px; display:none;}
 .err.on{display:block;}
 
@@ -538,19 +575,29 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
     <section class="step" data-step="6" data-stage="3">
       <h2>When suits you?</h2>
       <p class="sub">Pick a day that works. We'll confirm the exact window when we call.</p>
-      <div class="field">
-        <label for="fdate">Preferred date</label>
-        <input type="date" id="fdate" name="Preferred Date">
+      <input type="hidden" id="fdate" name="Preferred Date">
+      <input type="hidden" id="ftime" name="Preferred Time">
+
+      <div class="qblock">
+        <span class="qlabel">Pick a day</span>
+        <div class="daystrip" id="daystrip"></div>
       </div>
-      <div class="field">
-        <label for="ftime">Preferred time</label>
-        <select id="ftime" name="Preferred Time">
-          <option value="">Choose one&hellip;</option>
-          <option>Morning (8am&ndash;12pm)</option>
-          <option>Afternoon (12pm&ndash;4pm)</option>
-          <option>Late afternoon (4pm&ndash;6pm)</option>
-          <option>I'm flexible</option>
-        </select>
+
+      <div class="qblock">
+        <span class="qlabel">Arrival time<small>We'll confirm the exact window when we call</small></span>
+        <div class="slots" id="slots">
+          <button type="button" class="slot">8:00 AM</button>
+          <button type="button" class="slot">9:00 AM</button>
+          <button type="button" class="slot">10:00 AM</button>
+          <button type="button" class="slot">11:00 AM</button>
+          <button type="button" class="slot">12:00 PM</button>
+          <button type="button" class="slot">1:00 PM</button>
+          <button type="button" class="slot">2:00 PM</button>
+          <button type="button" class="slot">3:00 PM</button>
+          <button type="button" class="slot">4:00 PM</button>
+          <button type="button" class="slot">5:00 PM</button>
+          <button type="button" class="slot">I'm flexible</button>
+        </div>
       </div>
       <div class="field">
         <label for="fnotes">Anything we should know? <span style="font-weight:400; color:#8f9793;">(optional)</span></label>
@@ -605,9 +652,44 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
   var LAST   = steps.length - 1;      // the "done" panel
   var REVIEW = LAST - 1;
 
-  // Don't let anyone pick a date in the past.
-  var dateEl = document.getElementById('fdate');
-  dateEl.min = new Date().toISOString().split('T')[0];
+  // ---- Day strip: the next three weeks, no past dates possible ----------
+  var DOW = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  var MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  (function buildDays(){
+    var strip = document.getElementById('daystrip');
+    var start = new Date();
+    start.setHours(0,0,0,0);
+    start.setDate(start.getDate() + 1);          // earliest is tomorrow
+    for (var i = 0; i < 21; i++) {
+      var d = new Date(start);
+      d.setDate(start.getDate() + i);
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'day';
+      b.dataset.iso = d.getFullYear() + '-' +
+                      String(d.getMonth() + 1).padStart(2, '0') + '-' +
+                      String(d.getDate()).padStart(2, '0');
+      b.innerHTML = '<span class="dow">' + DOW[d.getDay()] + '</span>' +
+                    '<span class="dnum">' + MON[d.getMonth()] + ' ' + d.getDate() + '</span>';
+      strip.appendChild(b);
+    }
+  })();
+
+  form.addEventListener('click', function (e) {
+    var day = e.target.closest('.day');
+    if (day) {
+      form.querySelectorAll('.day').forEach(function (d) { d.classList.remove('on'); });
+      day.classList.add('on');
+      document.getElementById('fdate').value = day.dataset.iso;
+      return;
+    }
+    var slot = e.target.closest('.slot');
+    if (slot) {
+      form.querySelectorAll('.slot').forEach(function (s) { s.classList.remove('on'); });
+      slot.classList.add('on');
+      document.getElementById('ftime').value = slot.textContent.trim();
+    }
+  });
 
   function val(id){ var el = document.getElementById(id); return el ? el.value.trim() : ''; }
   function picked(name){
