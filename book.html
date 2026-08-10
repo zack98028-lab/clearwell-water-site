@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Book Water Treatment in Plymouth, Canton &amp; Salem Township | Clearwell Water</title>
-<meta name="description" content="Book a water softener, filtration, or well water treatment install for your Plymouth, Canton, or Salem Township MI home — or start with a free water test. Pick your own date.">
+<title>Get a Free Quote &mdash; Water Treatment in Plymouth, Canton, Ypsilanti &amp; Superior Township | Clearwell Water</title>
+<meta name="description" content="Book a water softener, filtration, or well water treatment install for your Plymouth, Canton, Salem Township, Superior Township, or Ypsilanti MI home — or start with a free water test. Pick your own date.">
 <link rel="canonical" href="https://clearwellwaterfiltration.com/book.html">
-<meta property="og:title" content="Book Your Water Treatment | Clearwell Water">
+<meta property="og:title" content="Get a Free Quote | Clearwell Water">
 <meta property="og:description" content="Pick your service and your date in a few easy steps. Free water test available, or book an install directly.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://clearwellwaterfiltration.com/book.html">
@@ -49,28 +49,49 @@ header.site .nav{max-width:var(--max); margin:0 auto; padding:14px 28px; display
 .links a:hover, .links a.active{color:var(--bone-white);}
 .nav-phone{color:var(--stone-light); text-decoration:none; font-size:14px; font-weight:600; white-space:nowrap;}
 
-/* ---------- Progress rail ---------- */
-.rail{background:var(--slate); border-top:1px solid rgba(255,255,255,.08);}
-.rail-inner{max-width:var(--max); margin:0 auto; padding:0 28px; display:flex; gap:6px;}
-.rail-step{flex:1; padding:11px 4px 12px; text-align:center; position:relative;}
-.rail-step span{
-  font-size:11px; letter-spacing:.11em; text-transform:uppercase; font-weight:600;
-  color:rgba(228,219,200,.45); transition:color .25s ease;
+/* ---------- Progress rail: dots joined by a line ---------- */
+.rail{background:var(--bone-white); border-bottom:1px solid var(--line);}
+.rail-inner{max-width:780px; margin:0 auto; padding:24px 20px 20px; display:flex;}
+.rail-step{flex:1; position:relative; text-align:center;}
+/* the connector runs from the previous dot to this one */
+.rail-step::before{
+  content:""; position:absolute; top:10px; right:50%; width:100%; height:2px;
+  background:#d8d2c4; transition:background .45s ease;
 }
-.rail-step::after{
-  content:""; position:absolute; left:0; right:0; bottom:0; height:3px;
-  background:rgba(255,255,255,.1); transition:background .3s ease;
+.rail-step:first-child::before{display:none;}
+.rail-step.done::before, .rail-step.active::before{background:var(--teal-deep);}
+.rail-step .dot{
+  position:relative; z-index:1; width:22px; height:22px; margin:0 auto 10px;
+  border-radius:50%; background:var(--bone-white); border:2px solid #cfc8ba;
+  display:flex; align-items:center; justify-content:center;
+  font-size:12px; color:transparent; line-height:1;
+  transition:background .3s ease, border-color .3s ease, box-shadow .3s ease, color .3s ease;
 }
-.rail-step.done span{color:rgba(228,219,200,.8);}
-.rail-step.done::after{background:var(--teal-deep);}
-.rail-step.active span{color:var(--bone-white);}
-.rail-step.active::after{background:var(--teal);}
+.rail-step.done .dot{background:var(--teal-deep); border-color:var(--teal-deep); color:#fff;}
+.rail-step.active .dot{background:var(--teal-deep); border-color:var(--teal-deep); box-shadow:0 0 0 5px rgba(74,155,142,.17);}
+.rail-step .lbl{
+  display:block; font-size:12.5px; font-weight:500; color:#8b938f;
+  transition:color .3s ease; line-height:1.3;
+}
+.rail-step.done .lbl{color:#5f6b67;}
+.rail-step.active .lbl{color:var(--slate); font-weight:600;}
+@media(max-width:620px){
+  .rail-inner{padding:20px 10px 16px;}
+  .rail-step .lbl{font-size:10.5px;}
+}
 
 /* ---------- Stage ---------- */
-.stage{max-width:640px; margin:0 auto; padding:56px 28px 90px; min-height:60vh;}
-.step{display:none; animation:rise .38s cubic-bezier(.2,.7,.3,1) both;}
+.stage{max-width:640px; margin:0 auto; padding:56px 28px 90px; min-height:60vh; overflow-x:hidden;}
+.step{display:none;}
 .step.on{display:block;}
-@keyframes rise{from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:none;}}
+/* Slides in from the right going forward, from the left going back. */
+.step.on.fwd{animation:slideFwd .42s cubic-bezier(.22,.68,.28,1) both;}
+.step.on.rev{animation:slideRev .42s cubic-bezier(.22,.68,.28,1) both;}
+@keyframes slideFwd{from{opacity:0; transform:translateX(46px);} to{opacity:1; transform:none;}}
+@keyframes slideRev{from{opacity:0; transform:translateX(-46px);} to{opacity:1; transform:none;}}
+@media (prefers-reduced-motion: reduce){
+  .step.on.fwd, .step.on.rev{animation:none;}
+}
 
 .eyebrow{font-size:12.5px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--teal-deep); display:block; margin-bottom:10px;}
 .step h2{font-size:clamp(27px,4.4vw,38px);}
@@ -170,7 +191,7 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
       <a href="index.html">Home</a>
       <a href="services.html">Services</a>
       <a href="about.html">About</a>
-      <a href="book.html" class="active">Book</a>
+      <a href="book.html" class="active">Free Quote</a>
       <a href="contact.html">Contact</a>
     </nav>
     <a href="tel:+17343065475" class="nav-phone">(734) 306-5475</a>
@@ -179,11 +200,11 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
 
 <div class="rail">
   <div class="rail-inner" id="rail">
-    <div class="rail-step active" data-stage="0"><span>Start</span></div>
-    <div class="rail-step" data-stage="1"><span>Your water</span></div>
-    <div class="rail-step" data-stage="2"><span>Service</span></div>
-    <div class="rail-step" data-stage="3"><span>Address &amp; date</span></div>
-    <div class="rail-step" data-stage="4"><span>Finish</span></div>
+    <div class="rail-step active"><span class="dot">&#10003;</span><span class="lbl">Start</span></div>
+    <div class="rail-step"><span class="dot">&#10003;</span><span class="lbl">Your water</span></div>
+    <div class="rail-step"><span class="dot">&#10003;</span><span class="lbl">Service</span></div>
+    <div class="rail-step"><span class="dot">&#10003;</span><span class="lbl">Your address</span></div>
+    <div class="rail-step"><span class="dot">&#10003;</span><span class="lbl">Finish</span></div>
   </div>
 </div>
 
@@ -195,7 +216,7 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
 
     <!-- 0 -->
     <section class="step on" data-step="0" data-stage="0">
-      <span class="eyebrow">Book in a few easy steps</span>
+      <span class="eyebrow">Free quote in a few easy steps</span>
       <h2>Let's get your water sorted.</h2>
       <p class="sub">A few quick questions and you can pick your own date. If you'd rather just talk to someone, call <a href="tel:+17343065475" style="color:var(--teal-deep); font-weight:600;">(734) 306-5475</a>.</p>
       <div class="field">
@@ -234,7 +255,7 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
         <label class="choice">
           <input type="radio" name="Water Source" value="City / municipal water"><span class="box"></span>
           <span class="txt"><strong>City water</strong>
-            <small>Plymouth, Canton and Northville are on GLWA municipal water. It's safe to drink &mdash; hardness and chlorine taste are the usual complaints.</small>
+            <small>Plymouth, Canton, Northville and the City of Ypsilanti are on municipal water. It's safe to drink &mdash; hardness and chlorine taste are the usual complaints.</small>
           </span>
         </label>
         <label class="choice">
@@ -324,6 +345,8 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
             <option>Canton</option>
             <option>Salem Township</option>
             <option>Northville</option>
+            <option>Superior Township</option>
+            <option>Ypsilanti</option>
             <option>Livonia</option>
             <option>Novi</option>
             <option>South Lyon</option>
@@ -416,8 +439,12 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
   }
 
   function show(i) {
-    steps[at].classList.remove('on');
-    steps[i].classList.add('on');
+    var back = i < at;
+    steps[at].classList.remove('on', 'fwd', 'rev');
+    steps[i].classList.remove('fwd', 'rev');
+    // reflow so the animation restarts even when replaying the same direction
+    void steps[i].offsetWidth;
+    steps[i].classList.add('on', back ? 'rev' : 'fwd');
     at = i;
     paintRail(+steps[i].dataset.stage);
     var y = rail.getBoundingClientRect().bottom + window.scrollY;
@@ -445,6 +472,60 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
     var d = new Date(+p[0], +p[1] - 1, +p[2]);   // local, not UTC — avoids off-by-one
     return d.toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric', year:'numeric' });
   }
+
+  // ---- Subject lines -------------------------------------------------
+  // The inbox should say what this person wants without opening it.
+  function subjectFor(complete) {
+    var svc  = picked('Service');
+    var who  = val('fname') || 'No name given';
+    var city = val('fcity') || 'city not given';
+    var when = val('fdate') ? prettyDate(val('fdate')).replace(/,? \d{4}$/, '') : 'no date picked';
+
+    if (!complete) {
+      return 'INCOMPLETE — ' + who + ' (' + (svc || 'no service chosen') + ') — ' + city;
+    }
+    if (svc === 'Free water test' || svc === 'Not sure yet') {
+      return 'FREE WATER TEST — ' + who + ' — ' + city + ' — ' + when;
+    }
+    return 'INSTALL REQUEST: ' + svc + ' — ' + who + ' — ' + city + ' — ' + when;
+  }
+
+  // ---- Partial capture ------------------------------------------------
+  // If someone gives a name and phone then leaves without finishing, that
+  // lead still reaches the inbox — flagged clearly as incomplete.
+  var completed = false, partialSent = false;
+
+  function sendPartial() {
+    if (completed || partialSent) return;
+    if (!val('fname') || !val('fphone')) return;   // nothing worth sending
+    if (!navigator.sendBeacon) return;
+    partialSent = true;
+
+    var fd = new FormData();
+    fd.append('access_key', form.querySelector('[name="access_key"]').value);
+    fd.append('subject', subjectFor(false));
+    fd.append('from_name', 'Clearwell Water website');
+    fd.append('Status', 'INCOMPLETE — visitor left before finishing');
+    fd.append('Got as far as', 'Step ' + (at + 1) + ' of 5');
+    fd.append('Name', val('fname'));
+    fd.append('Phone', val('fphone'));
+    if (val('femail'))        fd.append('Email', val('femail'));
+    if (picked('Water Source')) fd.append('Water Source', picked('Water Source'));
+    if (picked('Service'))    fd.append('Service', picked('Service'));
+    if (val('faddr'))         fd.append('Address', val('faddr'));
+    if (val('fcity'))         fd.append('City', val('fcity'));
+    if (val('fzip'))          fd.append('ZIP', val('fzip'));
+    if (val('fdate'))         fd.append('Preferred Date', prettyDate(val('fdate')));
+    if (val('ftime'))         fd.append('Preferred Time', val('ftime'));
+    if (val('fnotes'))        fd.append('Notes', val('fnotes'));
+
+    navigator.sendBeacon('https://api.web3forms.com/submit', fd);
+  }
+
+  window.addEventListener('pagehide', sendPartial);
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'hidden') sendPartial();
+  });
 
   function buildReview() {
     var rows = [
@@ -501,10 +582,15 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
     btn.disabled = true;
     btn.textContent = 'Sending…';
 
-    fetch(form.action, { method:'POST', body:new FormData(form) })
+    var fd = new FormData(form);
+    fd.set('subject', subjectFor(true));
+    fd.set('Status', 'COMPLETE — submitted from the website');
+    if (val('fdate')) fd.set('Preferred Date', prettyDate(val('fdate')));
+
+    fetch(form.action, { method:'POST', body:fd })
       .then(function (r) { return r.json(); })
       .then(function (data) {
-        if (data.success) { show(5); }
+        if (data.success) { completed = true; show(5); }
         else { throw new Error(data.message || 'Submit failed'); }
       })
       .catch(function () {
