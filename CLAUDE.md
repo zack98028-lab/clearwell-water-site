@@ -100,8 +100,26 @@ Voice: plain, specific, non-salesy. Real numbers over adjectives. The site's who
 credibility argument is "we'll tell you if you don't need anything," so avoid copy
 that oversells or manufactures urgency.
 
+## Gotchas worth knowing
+
+- **Never let layout depend on an animation or transition finishing.** The mobile
+  menu originally slid in via a transform transition; if that transition did not
+  advance, the drawer stayed off-screen and the site could not be navigated on a
+  phone at all. It now toggles `display` and the fade is decoration only. The quote
+  wizard's step slide has the same guard (no `fill-mode`, plus a timer that strips
+  the animating class).
+- `assets/styles.css` has its whole ruleset **duplicated**, and once had a selector
+  corrupted to `e{`. If a rule seems not to apply, check for a later duplicate
+  overriding it. Overrides appended at the end of the file win.
+- Every page needs `<button class="burger" id="burgerBtn">` in the markup — the CSS
+  alone does nothing. The subpages shipped without it and had no mobile nav.
+- The in-app preview browser does not advance CSS animations or transitions, so
+  `getComputedStyle` on an animated property reads the start value forever. Verify
+  motion on a real device, not in that pane.
+
 ## Also not done
 
 - No analytics installed.
-- No email address is published on the site (phone only) — intentional for now, since
-  no mailbox exists at the domain yet.
+- No payment collection. The finish step sends a request; it does not take money.
+  Stripe Checkout is the intended route when the business bank account exists —
+  card details must never be collected by a form on this site.
