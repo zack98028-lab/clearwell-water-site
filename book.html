@@ -384,12 +384,6 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
             <small>Plymouth, Canton, Northville and the City of Ypsilanti are on municipal water. Safe to drink &mdash; hardness and chlorine taste are the usual complaints.</small>
           </span>
         </label>
-        <label class="choice">
-          <input type="radio" name="Water Source" value="Not sure"><span class="box"></span>
-          <span class="txt"><strong>I'm not sure</strong>
-            <small>No problem &mdash; we'll figure it out when we come out.</small>
-          </span>
-        </label>
       </div>
       <div class="actions">
         <button type="button" class="btn btn-teal" data-next>Continue</button>
@@ -949,7 +943,9 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
     var fd = new FormData(form);
     fd.set('subject', subjectFor(true));
     fd.set('Status', 'COMPLETE — submitted from the website');
-    if (val('fdate')) fd.set('Preferred Date', prettyDate(val('fdate')));
+    if (val('fdate'))  fd.set('Preferred Date', prettyDate(val('fdate')));
+    // so hitting reply in the inbox goes back to the customer
+    if (val('femail')) fd.set('replyto', val('femail'));
 
     fetch(form.action, { method:'POST', body:fd })
       .then(function (r) { return r.json(); })

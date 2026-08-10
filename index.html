@@ -122,7 +122,7 @@ nav.links a.active,nav.links a:hover{color:var(--teal-deep);}
 /* ---------- Hero (full-bleed photo, blur-to-clear on scroll) ---------- */
 .hero{position:relative; padding:110px 0 120px; overflow:hidden; isolation:isolate;}
 .hero-bg-wrap{position:absolute; inset:0; z-index:-2; overflow:hidden;}
-.hero-bg-img{width:100%; height:100%; object-fit:cover; filter:blur(8px); transform:scale(1.14); will-change:transform, filter;}
+.hero-bg-img{width:100%; height:100%; object-fit:cover; filter:blur(5px); transform:scale(1.12); will-change:transform, filter;}
 
 /* Scroll-in reveal — the hero itself is excluded so it never starts hidden. */
 .reveal{opacity:0; transform:translateY(22px); transition:opacity .7s cubic-bezier(.2,.7,.3,1), transform .7s cubic-bezier(.2,.7,.3,1);}
@@ -131,7 +131,14 @@ nav.links a.active,nav.links a:hover{color:var(--teal-deep);}
 @media (prefers-reduced-motion: reduce){
   .reveal{opacity:1; transform:none; transition:none;}
 }
-.hero-bg-overlay{position:absolute; inset:0; background:linear-gradient(165deg, rgba(21,42,55,0.40) 0%, rgba(31,59,77,0.32) 55%, rgba(33,65,79,0.28) 100%);}
+/* Two layers: a wash for mood, plus a soft scrim centred behind the
+   headline so the type stays readable whatever the photo is doing. */
+.hero-bg-overlay{
+  position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse 62% 58% at 50% 46%, rgba(12,26,35,0.62) 0%, rgba(12,26,35,0.30) 55%, rgba(12,26,35,0) 100%),
+    linear-gradient(165deg, rgba(21,42,55,0.46) 0%, rgba(31,59,77,0.34) 55%, rgba(33,65,79,0.30) 100%);
+}
 .hero::after{
   content:""; position:absolute; inset:0; z-index:-1; opacity:0.4;
   background-image:radial-gradient(circle, rgba(242,238,230,0.06) 1px, transparent 1px);
@@ -140,9 +147,9 @@ nav.links a.active,nav.links a:hover{color:var(--teal-deep);}
 .hero-inner{text-align:center; max-width:800px; margin:0 auto;}
 .hero-kicker{font-family:'Fraunces',serif; font-style:italic; font-size:19px; color:var(--stone); margin-bottom:18px; display:flex; align-items:center; justify-content:center; gap:16px;}
 .hero-kicker .rule{width:34px; height:1px; background:var(--stone); opacity:0.6;}
-.hero h1{font-size:clamp(46px,7.5vw,84px); font-weight:600; color:var(--bone-white); margin:0 auto 10px; letter-spacing:-0.02em;}
+.hero h1{font-size:clamp(46px,7.5vw,84px); font-weight:600; color:var(--bone-white); margin:0 auto 10px; letter-spacing:-0.02em; text-shadow:0 2px 24px rgba(8,18,25,0.45);}
 .hero .subcaps{font-family:'Inter',sans-serif; font-weight:600; font-size:clamp(14px,1.8vw,18px); letter-spacing:0.16em; text-transform:uppercase; color:var(--teal); margin-bottom:26px;}
-.hero .lede{font-size:18px; max-width:520px; margin:0 auto; color:#cfd9d7;}
+.hero .lede{font-size:18px; max-width:520px; margin:0 auto; color:#e2eae8; text-shadow:0 1px 14px rgba(8,18,25,0.5);}
 .hero-actions{display:flex; gap:14px; margin-top:34px; flex-wrap:wrap; justify-content:center;}
 .hero-actions .btn{border-radius:44px; padding:15px 30px;}
 .hero-actions .btn-outline{border-color:rgba(242,238,230,0.4); color:var(--bone-white);}
@@ -571,7 +578,7 @@ fieldset legend{font-size:13px; font-weight:600; color:var(--slate); padding:0 6
   </div>
   <div class="wrap foot-bottom">
     <span>&copy; 2026 Clearwell Water. Plymouth, MI.</span>
-    <span>(734) 306-5475 &middot; hello@clearwellwaterfiltration.com</span>
+    <span><a href="tel:+17343065475" style="text-decoration:none;">(734) 306-5475</a> &middot; <a href="mailto:team@clearwellwaterfiltration.com" style="text-decoration:none;">team@clearwellwaterfiltration.com</a></span>
   </div>
 </footer>
 
