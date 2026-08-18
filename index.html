@@ -209,12 +209,68 @@ nav.links a.active,nav.links a:hover{color:var(--teal-deep);}
 .ic-ok{background:rgba(74,155,142,.14); color:var(--teal-deep);}
 .result .acts{display:flex; gap:10px; flex-wrap:wrap; margin-top:4px;}
 
+/* ---------- Big statement band ---------- */
+.shout{background:var(--slate); color:var(--bone-white); padding:88px 0; position:relative; overflow:hidden;}
+.shout::before{
+  content:""; position:absolute; inset:0; opacity:.5;
+  background:radial-gradient(circle at 82% 18%, rgba(74,155,142,.34) 0%, transparent 58%),
+             radial-gradient(circle at 8% 88%, rgba(176,96,63,.22) 0%, transparent 55%);
+}
+.shout .wrap{position:relative; z-index:1;}
+.shout h2{
+  color:var(--bone-white); font-size:clamp(36px,6.4vw,78px); line-height:.98;
+  letter-spacing:-.028em; max-width:960px; margin:0 0 18px;
+}
+.shout h2 em{font-style:normal; color:var(--teal);}
+.shout .lede{color:#c3d1cf; font-size:18px; max-width:560px;}
+.bignums{display:grid; grid-template-columns:repeat(3,1fr); gap:26px; margin-top:56px;}
+@media(max-width:820px){.bignums{grid-template-columns:1fr; gap:14px;}}
+.bignum{border-top:2px solid rgba(228,219,200,.28); padding-top:20px;}
+.bignum .n{
+  display:block; font-family:'Fraunces',serif; font-weight:600;
+  font-size:clamp(46px,6.6vw,74px); line-height:.9; color:var(--bone-white);
+  letter-spacing:-.03em; margin-bottom:12px;
+}
+.bignum .n span{color:var(--teal);}
+.bignum p{font-size:14.5px; color:#b6c5c2; margin:0;}
+
+/* ---------- Price face-off ---------- */
+.faceoff{display:grid; grid-template-columns:1fr auto 1fr; gap:0; align-items:stretch; margin-top:44px;}
+@media(max-width:760px){.faceoff{grid-template-columns:1fr;}}
+.fo{padding:38px 34px; border-radius:20px;}
+.fo .who{font-size:12px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; margin-bottom:16px; display:block;}
+.fo .amt{display:block; font-family:'Fraunces',serif; font-weight:600; font-size:clamp(50px,8vw,86px); line-height:.88; letter-spacing:-.035em; margin-bottom:14px;}
+.fo p{font-size:14.5px; margin:0;}
+.fo-them{background:#E9E2D6; color:#5b5548;}
+.fo-them .who{color:var(--clay);}
+.fo-them .amt{color:#6b6153;}
+.fo-us{background:var(--slate); color:#c9d6d4;}
+.fo-us .who{color:var(--stone);}
+.fo-us .amt{color:var(--bone-white);}
+.fo-vs{
+  display:flex; align-items:center; justify-content:center; padding:0 22px;
+  font-family:'Fraunces',serif; font-size:20px; font-style:italic; color:#8a8375;
+}
+
 /* ---------- Problem / solution ---------- */
 .ps-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:18px;}
 @media(max-width:820px){.ps-grid{grid-template-columns:1fr;}}
-.ps{background:var(--bone-white); border:1px solid var(--line); border-radius:16px; padding:26px 26px 24px;}
+.ps{
+  position:relative; background:var(--bone-white); border:1px solid var(--line);
+  border-radius:18px; padding:30px 28px 26px; overflow:hidden;
+  transition:transform .18s ease, box-shadow .18s ease;
+}
+.ps:hover{transform:translateY(-3px); box-shadow:0 16px 38px rgba(21,42,55,.12);}
+.ps::before{content:""; position:absolute; left:0; top:0; bottom:0; width:5px; background:var(--clay);}
+.ps:nth-child(2)::before{background:var(--teal);}
+.ps:nth-child(3)::before{background:var(--stone);}
+.ps:nth-child(4)::before{background:var(--slate);}
+.ps .num{
+  position:absolute; right:18px; top:8px; font-family:'Fraunces',serif; font-weight:600;
+  font-size:76px; line-height:1; color:var(--slate); opacity:.07; pointer-events:none;
+}
 .ps .tagline{font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--clay); background:rgba(176,96,63,.1); padding:4px 11px; border-radius:20px; display:inline-block; margin-bottom:14px;}
-.ps h3{font-size:20px; margin-bottom:8px;}
+.ps h3{font-size:23px; margin-bottom:10px; letter-spacing:-.015em;}
 .ps p{font-size:14.5px; color:#4d5a57; margin-bottom:14px;}
 .ps .fix{border-top:1px solid var(--line); padding-top:14px; font-size:14px;}
 .ps .fix b{color:var(--teal-deep);}
@@ -233,20 +289,32 @@ nav.links a.active,nav.links a:hover{color:var(--teal-deep);}
 .cmp-note{font-size:12.5px; color:#6f7b77; margin-top:14px;}
 
 /* ---------- Closing contact block ---------- */
-.closer{position:relative; background:var(--slate-deep); overflow:hidden; padding:80px 0;}
+.closer{position:relative; background:var(--slate-deep); overflow:hidden; padding:96px 0 104px;}
+.closer-head{position:relative; z-index:2; text-align:center; max-width:820px; margin:0 auto 54px;}
+.closer-head .kick{
+  display:inline-block; font-size:11.5px; font-weight:700; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--slate-deep); background:var(--stone);
+  padding:7px 16px; border-radius:30px; margin-bottom:20px;
+}
+.closer-head h2{
+  font-size:clamp(38px,6vw,72px); color:var(--bone-white); line-height:.98;
+  letter-spacing:-.025em; margin:0;
+}
+.closer-head h2 em{font-style:normal; color:var(--teal);}
 .closer-map{
   position:absolute; inset:0; width:100%; height:100%;
-  object-fit:cover; opacity:.5; pointer-events:none;
+  object-fit:cover; opacity:1; pointer-events:none;
 }
 .closer::after{
   content:""; position:absolute; inset:0;
-  background:linear-gradient(180deg, rgba(21,42,55,.30) 0%, rgba(21,42,55,.55) 100%);
+  background:radial-gradient(ellipse 90% 70% at 50% 50%, rgba(21,42,55,.10) 0%, rgba(21,42,55,.62) 100%);
 }
-.closer-inner{position:relative; z-index:1; display:grid; grid-template-columns:1fr 1fr; gap:26px; align-items:start;}
+.closer-inner{position:relative; z-index:2; display:grid; grid-template-columns:1fr 1fr; gap:22px; align-items:start; max-width:940px; margin:0 auto;}
 @media(max-width:880px){.closer-inner{grid-template-columns:1fr;}}
-.closer-card{background:var(--bone-white); border-radius:18px; padding:32px 32px 30px; box-shadow:0 18px 44px rgba(0,0,0,.22);}
-.closer-card h2{font-size:clamp(25px,3vw,33px); margin-bottom:10px;}
-.closer-card p{font-size:15px; color:#4d5a57;}
+.closer-card{background:var(--bone-white); border-radius:18px; padding:26px 26px 24px; box-shadow:0 22px 50px rgba(0,0,0,.34);}
+.closer-card h2{font-size:clamp(21px,2.3vw,26px); margin-bottom:8px;}
+.closer-card p{font-size:14px; color:#4d5a57;}
+.closer-card .eyebrow{font-size:11px; margin-bottom:10px;}
 .bigcall{
   display:flex; align-items:center; gap:14px; margin:20px 0 18px; padding:18px 20px;
   background:var(--slate); border-radius:14px; text-decoration:none;
@@ -642,6 +710,27 @@ fieldset legend{font-size:13px; font-weight:600; color:var(--slate); padding:0 6
   </div>
 </section>
 
+<section class="shout">
+  <div class="wrap">
+    <h2>No van in your driveway.<br>No pitch at your table.<br><em>Just your water, explained.</em></h2>
+    <p class="lede">The in-home water test is the oldest trick in this industry. It exists to get someone through your door. Your city already publishes the results &mdash; we'll just read them to you.</p>
+    <div class="bignums">
+      <div class="bignum">
+        <span class="n">$0</span>
+        <p>To find out what's in your city water. No appointment, no email required, no follow-up call you didn't ask for.</p>
+      </div>
+      <div class="bignum">
+        <span class="n">1<span> in </span>8</span>
+        <p>Wells around Washtenaw County are estimated by the USGS to exceed the federal arsenic limit. You cannot taste it, smell it, or see it.</p>
+      </div>
+      <div class="bignum">
+        <span class="n">$3k<span>+</span></span>
+        <p>What a decade of renting a softener can cost you beyond simply buying one &mdash; and you hand it back at the end.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="tight">
   <div class="wrap">
     <div class="section-head">
@@ -652,28 +741,28 @@ fieldset legend{font-size:13px; font-weight:600; color:var(--slate); padding:0 6
     <div class="ps-grid">
 
       <div class="ps">
-        <span class="tagline">The problem</span>
+        <span class="num">01</span><span class="tagline">The problem</span>
         <h3>Lead gets in after the testing stops</h3>
         <p>Your utility tests the water it sends down the street. It can't test the pipe running into your house, or the solder in your walls. If those are old, lead enters in the last few feet of the journey &mdash; and there's no level of lead considered safe for children, who absorb it far more readily than adults do.</p>
         <div class="fix"><b>The fix:</b> Certified carbon filtration &mdash; at the kitchen tap, or whole-home if you want it everywhere. Neither requires repiping your house.</div>
       </div>
 
       <div class="ps">
-        <span class="tagline">The problem</span>
+        <span class="num">02</span><span class="tagline">The problem</span>
         <h3>Chlorine keeps water safe, then keeps going</h3>
         <p>Chlorine is why municipal water doesn't make you sick, so nobody should want it gone at the plant. But it stays in the water all the way to your glass, along with the byproducts that form when it reacts with organic matter. Those are regulated and monitored &mdash; and they're also why your water tastes like a swimming pool.</p>
         <div class="fix"><b>The fix:</b> Carbon reduces chlorine, its byproducts, and the taste that comes with them &mdash; at the point where it stops doing its job and starts being a nuisance.</div>
       </div>
 
       <div class="ps">
-        <span class="tagline">The problem</span>
+        <span class="num">03</span><span class="tagline">The problem</span>
         <h3>Hard water is quietly expensive</h3>
         <p>At 7 to 13 grains per gallon, this region's water leaves scale on everything it touches. It coats the element in your water heater so it burns more energy for the same hot shower, shortens the life of every appliance plumbed into it, and makes you use noticeably more soap for the same result.</p>
         <div class="fix"><b>The fix:</b> A properly sized softener. Not a health purchase &mdash; an appliance-life and utility-bill one that pays back slowly and permanently.</div>
       </div>
 
       <div class="ps">
-        <span class="tagline">The problem</span>
+        <span class="num">04</span><span class="tagline">The problem</span>
         <h3>Well water answers to nobody</h3>
         <p>No utility, no annual report, no requirement to test after the well is drilled. Arsenic occurs naturally in the bedrock under Washtenaw County &mdash; the USGS estimates roughly a one in eight chance a well here exceeds the federal limit, and it has no taste, smell or color. Coliform and nitrates are equally invisible, and nitrates matter most for infants.</p>
         <div class="fix"><b>The fix:</b> Test first, always. Then a system sized to your actual results &mdash; not a package sold to every well in the county.</div>
@@ -687,8 +776,22 @@ fieldset legend{font-size:13px; font-weight:600; color:var(--slate); padding:0 6
   <div class="wrap">
     <div class="section-head">
       <span class="eyebrow">Why we cost less</span>
-      <h2>You're not paying for a national brand. You're paying for the equipment and the install.</h2>
+      <h2>Same softener. Half the invoice.</h2>
       <p style="color:#4d5a57; margin-top:14px;">The big names run call centres, regional managers, television spots and a commissioned salesman who drives to your house hoping to leave with a signature. That all lands on your invoice. We're a local outfit with published prices and independent installers &mdash; the same tanks and media, without the overhead stacked on top.</p>
+
+      <div class="faceoff">
+        <div class="fo fo-them">
+          <span class="who">A national brand</span>
+          <span class="amt">$6,500</span>
+          <p>Top of the published range for a softener installed &mdash; quoted at your kitchen table, after the free test, by someone on commission.</p>
+        </div>
+        <div class="fo-vs">vs</div>
+        <div class="fo fo-us">
+          <span class="who">Clearwell</span>
+          <span class="amt">$2,800</span>
+          <p>Typical softener installed and owned outright. Our range is $2,000&ndash;3,500 and it's printed on this page, before anyone speaks to you.</p>
+        </div>
+      </div>
     </div>
     <div class="section-head" style="margin-top:56px;">
       <span class="eyebrow">What this costs, honestly</span>
@@ -762,65 +865,84 @@ fieldset legend{font-size:13px; font-weight:600; color:var(--slate); padding:0 6
     </defs>
 
     <!-- section-line grid, like a plat map -->
-    <g stroke="#C9BBA0" stroke-opacity=".13" stroke-width="1">
+    <g stroke="#C9BBA0" stroke-opacity=".22" stroke-width="1.2">
       <path d="M0 80h1200M0 160h1200M0 240h1200M0 320h1200M0 400h1200M0 480h1200M0 560h1200"/>
       <path d="M80 0v640M240 0v640M400 0v640M560 0v640M720 0v640M880 0v640M1040 0v640"/>
     </g>
 
     <!-- Huron River -->
     <path d="M120 120 C 300 210, 360 300, 470 360 S 700 470, 900 520"
-          fill="none" stroke="url(#riv)" stroke-width="7" stroke-linecap="round"/>
+          fill="none" stroke="url(#riv)" stroke-width="12" stroke-linecap="round"/>
+    <text x="150" y="150" fill="#4A9B8E" fill-opacity=".85" font-family="Inter, sans-serif"
+          font-size="14" font-style="italic" font-weight="600">Huron River</text>
 
-    <!-- freeways -->
-    <g fill="none" stroke="#E4DBC8" stroke-opacity=".34" stroke-width="3.5" stroke-linecap="round">
+    <!-- freeways: casing then fill, so they read like real highways -->
+    <g fill="none" stroke="#0E1D26" stroke-opacity=".55" stroke-width="11" stroke-linecap="round">
+      <path d="M840 0 V 640"/><path d="M300 0 V 640"/>
+      <path d="M0 200 H 1200"/><path d="M0 470 H 1200"/><path d="M980 0 L 1200 250"/>
+    </g>
+    <g fill="none" stroke="#E4DBC8" stroke-opacity=".78" stroke-width="5" stroke-linecap="round">
       <path d="M840 0 V 640"/>            <!-- I-275 -->
       <path d="M300 0 V 640"/>            <!-- US-23 -->
       <path d="M0 200 H 1200"/>           <!-- M-14 -->
       <path d="M0 470 H 1200"/>           <!-- I-94 -->
       <path d="M980 0 L 1200 250"/>       <!-- I-96 -->
     </g>
-    <g fill="#E4DBC8" fill-opacity=".42" font-family="Inter, sans-serif" font-size="13" font-weight="600">
-      <text x="852" y="42">I-275</text>
-      <text x="312" y="42">US-23</text>
-      <text x="24" y="190">M-14</text>
-      <text x="24" y="460">I-94</text>
+    <g font-family="Inter, sans-serif" font-size="15" font-weight="700">
+      <g fill="#152A37">
+        <rect x="856" y="26" width="56" height="24" rx="5"/>
+        <rect x="316" y="26" width="64" height="24" rx="5"/>
+        <rect x="22" y="172" width="58" height="24" rx="5"/>
+        <rect x="22" y="442" width="48" height="24" rx="5"/>
+      </g>
+      <g fill="#E4DBC8">
+        <text x="864" y="44">I-275</text>
+        <text x="324" y="44">US-23</text>
+        <text x="30" y="190">M-14</text>
+        <text x="30" y="460">I-94</text>
+      </g>
     </g>
+
+    <!-- core service area, drawn under the pins -->
+    <path d="M440 110 L 830 105 L 880 260 L 740 420 L 400 400 Z"
+          fill="#4A9B8E" fill-opacity=".16"
+          stroke="#4A9B8E" stroke-opacity=".9" stroke-width="4" stroke-dasharray="14 9"/>
 
     <!-- towns -->
-    <g font-family="Inter, sans-serif" font-size="15" font-weight="600">
-      <g fill="#4A9B8E"><circle cx="640" cy="230" r="9"/></g>
-      <text x="660" y="236" fill="#FBFAF7">Plymouth</text>
+    <g font-family="Inter, sans-serif" font-weight="700">
+      <g fill="#4A9B8E" stroke="#0E1D26" stroke-width="3">
+        <circle cx="640" cy="230" r="13"/><circle cx="700" cy="360" r="13"/><circle cx="800" cy="140" r="13"/>
+      </g>
+      <g fill="#FBFAF7" font-size="21" stroke="#0E1D26" stroke-width="4" paint-order="stroke">
+        <text x="664" y="238">Plymouth</text>
+        <text x="724" y="368">Canton</text>
+        <text x="824" y="148">Northville</text>
+      </g>
 
-      <g fill="#4A9B8E"><circle cx="700" cy="360" r="9"/></g>
-      <text x="720" y="366" fill="#FBFAF7">Canton</text>
+      <g fill="#C9BBA0" stroke="#0E1D26" stroke-width="3">
+        <circle cx="470" cy="140" r="11"/><circle cx="430" cy="330" r="11"/><circle cx="330" cy="440" r="11"/>
+      </g>
+      <g fill="#E4DBC8" font-size="18" stroke="#0E1D26" stroke-width="4" paint-order="stroke">
+        <text x="490" y="147">Salem Twp</text>
+        <text x="450" y="337">Superior Twp</text>
+        <text x="350" y="447">Ypsilanti</text>
+      </g>
 
-      <g fill="#4A9B8E"><circle cx="800" cy="140" r="9"/></g>
-      <text x="820" y="146" fill="#FBFAF7">Northville</text>
-
-      <g fill="#C9BBA0"><circle cx="470" cy="140" r="8"/></g>
-      <text x="488" y="146" fill="#E4DBC8" font-size="14">Salem Twp</text>
-
-      <g fill="#C9BBA0"><circle cx="430" cy="330" r="8"/></g>
-      <text x="448" y="336" fill="#E4DBC8" font-size="14">Superior Twp</text>
-
-      <g fill="#C9BBA0"><circle cx="330" cy="440" r="8"/></g>
-      <text x="348" y="446" fill="#E4DBC8" font-size="14">Ypsilanti</text>
-
-      <g fill="#C9BBA0" fill-opacity=".55"><circle cx="1000" cy="300" r="7"/></g>
-      <text x="1016" y="306" fill="#E4DBC8" fill-opacity=".6" font-size="13">Livonia</text>
-
-      <g fill="#C9BBA0" fill-opacity=".55"><circle cx="960" cy="90" r="7"/></g>
-      <text x="976" y="96" fill="#E4DBC8" fill-opacity=".6" font-size="13">Novi</text>
-
-      <g fill="#C9BBA0" fill-opacity=".55"><circle cx="330" cy="60" r="7"/></g>
-      <text x="346" y="66" fill="#E4DBC8" fill-opacity=".6" font-size="13">South Lyon</text>
+      <g fill="#C9BBA0" fill-opacity=".6" stroke="#0E1D26" stroke-width="2.5">
+        <circle cx="1000" cy="300" r="8"/><circle cx="960" cy="90" r="8"/><circle cx="330" cy="60" r="8"/>
+      </g>
+      <g fill="#E4DBC8" fill-opacity=".72" font-size="14" font-weight="600" stroke="#0E1D26" stroke-width="3" paint-order="stroke">
+        <text x="1016" y="306">Livonia</text>
+        <text x="976" y="96">Novi</text>
+        <text x="346" y="66">South Lyon</text>
+      </g>
     </g>
-
-    <!-- core service area outline -->
-    <path d="M440 110 L 830 105 L 880 260 L 740 420 L 400 400 Z"
-          fill="#4A9B8E" fill-opacity=".07"
-          stroke="#4A9B8E" stroke-opacity=".38" stroke-width="2.5" stroke-dasharray="10 8"/>
   </svg>
+
+  <div class="wrap closer-head">
+    <span class="kick">Western Wayne &amp; eastern Washtenaw</span>
+    <h2>This is our whole map.<br><em>That's the point.</em></h2>
+  </div>
 
   <div class="wrap closer-inner">
 
