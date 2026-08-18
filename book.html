@@ -679,8 +679,8 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
 
     <!-- 7 — date -->
     <section class="step" data-step="7" data-stage="3">
-      <h2>When suits you?</h2>
-      <p class="sub">Pick a day that works. We'll confirm the exact window when we call.</p>
+      <h2 id="dateTitle">When suits you?</h2>
+      <p class="sub" id="dateSub">Pick a day that works. We'll confirm the exact window when we call.</p>
       <input type="hidden" id="fdate" name="Preferred Date">
       <input type="hidden" id="ftime" name="Preferred Time">
 
@@ -925,6 +925,19 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
     document.getElementById('homeSub').textContent = isTest
       ? "So we bring the right test kit, and know what to look for when we get there."
       : "This is what actually sizes the system, so we quote a real number instead of a guess.";
+
+    // A well system cannot be dated before the results exist — so for well
+    // work the date being picked is the TEST, not the install.
+    var dt = document.getElementById('dateTitle');
+    var ds = document.getElementById('dateSub');
+    if (isTest || well) {
+      dt.textContent = 'When should we test?';
+      ds.textContent = "Pick a day for the water test. We can't put a date on an install yet — "
+        + "what you need depends on what the test finds, and we'd rather book that once we know.";
+    } else {
+      dt.textContent = 'When should we install?';
+      ds.textContent = 'Pick a day that works. We’ll confirm the exact arrival window when we call.';
+    }
   }
 
   // Only require answers to questions this visitor can actually see.

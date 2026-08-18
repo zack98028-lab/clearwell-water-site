@@ -234,10 +234,13 @@ nav.links a.active,nav.links a:hover{color:var(--teal-deep);}
 
 /* ---------- Closing contact block ---------- */
 .closer{position:relative; background:var(--slate-deep); overflow:hidden; padding:80px 0;}
-.closer::before{
-  content:""; position:absolute; inset:0; opacity:.16;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Cg fill='none' stroke='%23C9BBA0' stroke-width='2' opacity='0.5'%3E%3Cpath d='M0 60h300M0 140h300M0 220h300'/%3E%3Cpath d='M60 0v300M150 0v300M240 0v300'/%3E%3Ccircle cx='60' cy='60' r='7'/%3E%3Ccircle cx='150' cy='140' r='7'/%3E%3Ccircle cx='240' cy='220' r='7'/%3E%3C/g%3E%3C/svg%3E");
-  background-size:300px 300px;
+.closer-map{
+  position:absolute; inset:0; width:100%; height:100%;
+  object-fit:cover; opacity:.5; pointer-events:none;
+}
+.closer::after{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(180deg, rgba(21,42,55,.30) 0%, rgba(21,42,55,.55) 100%);
 }
 .closer-inner{position:relative; z-index:1; display:grid; grid-template-columns:1fr 1fr; gap:26px; align-items:start;}
 @media(max-width:880px){.closer-inner{grid-template-columns:1fr;}}
@@ -748,6 +751,77 @@ fieldset legend{font-size:13px; font-weight:600; color:var(--slate); padding:0 6
 </section>
 
 <section class="closer">
+  <!-- Stylised map of the service area: the freeways that actually bound it,
+       the Huron River, and where each town sits relative to the others. -->
+  <svg class="closer-map" viewBox="0 0 1200 640" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="riv" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#4A9B8E" stop-opacity=".9"/>
+        <stop offset="100%" stop-color="#4A9B8E" stop-opacity=".35"/>
+      </linearGradient>
+    </defs>
+
+    <!-- section-line grid, like a plat map -->
+    <g stroke="#C9BBA0" stroke-opacity=".13" stroke-width="1">
+      <path d="M0 80h1200M0 160h1200M0 240h1200M0 320h1200M0 400h1200M0 480h1200M0 560h1200"/>
+      <path d="M80 0v640M240 0v640M400 0v640M560 0v640M720 0v640M880 0v640M1040 0v640"/>
+    </g>
+
+    <!-- Huron River -->
+    <path d="M120 120 C 300 210, 360 300, 470 360 S 700 470, 900 520"
+          fill="none" stroke="url(#riv)" stroke-width="7" stroke-linecap="round"/>
+
+    <!-- freeways -->
+    <g fill="none" stroke="#E4DBC8" stroke-opacity=".34" stroke-width="3.5" stroke-linecap="round">
+      <path d="M840 0 V 640"/>            <!-- I-275 -->
+      <path d="M300 0 V 640"/>            <!-- US-23 -->
+      <path d="M0 200 H 1200"/>           <!-- M-14 -->
+      <path d="M0 470 H 1200"/>           <!-- I-94 -->
+      <path d="M980 0 L 1200 250"/>       <!-- I-96 -->
+    </g>
+    <g fill="#E4DBC8" fill-opacity=".42" font-family="Inter, sans-serif" font-size="13" font-weight="600">
+      <text x="852" y="42">I-275</text>
+      <text x="312" y="42">US-23</text>
+      <text x="24" y="190">M-14</text>
+      <text x="24" y="460">I-94</text>
+    </g>
+
+    <!-- towns -->
+    <g font-family="Inter, sans-serif" font-size="15" font-weight="600">
+      <g fill="#4A9B8E"><circle cx="640" cy="230" r="9"/></g>
+      <text x="660" y="236" fill="#FBFAF7">Plymouth</text>
+
+      <g fill="#4A9B8E"><circle cx="700" cy="360" r="9"/></g>
+      <text x="720" y="366" fill="#FBFAF7">Canton</text>
+
+      <g fill="#4A9B8E"><circle cx="800" cy="140" r="9"/></g>
+      <text x="820" y="146" fill="#FBFAF7">Northville</text>
+
+      <g fill="#C9BBA0"><circle cx="470" cy="140" r="8"/></g>
+      <text x="488" y="146" fill="#E4DBC8" font-size="14">Salem Twp</text>
+
+      <g fill="#C9BBA0"><circle cx="430" cy="330" r="8"/></g>
+      <text x="448" y="336" fill="#E4DBC8" font-size="14">Superior Twp</text>
+
+      <g fill="#C9BBA0"><circle cx="330" cy="440" r="8"/></g>
+      <text x="348" y="446" fill="#E4DBC8" font-size="14">Ypsilanti</text>
+
+      <g fill="#C9BBA0" fill-opacity=".55"><circle cx="1000" cy="300" r="7"/></g>
+      <text x="1016" y="306" fill="#E4DBC8" fill-opacity=".6" font-size="13">Livonia</text>
+
+      <g fill="#C9BBA0" fill-opacity=".55"><circle cx="960" cy="90" r="7"/></g>
+      <text x="976" y="96" fill="#E4DBC8" fill-opacity=".6" font-size="13">Novi</text>
+
+      <g fill="#C9BBA0" fill-opacity=".55"><circle cx="330" cy="60" r="7"/></g>
+      <text x="346" y="66" fill="#E4DBC8" fill-opacity=".6" font-size="13">South Lyon</text>
+    </g>
+
+    <!-- core service area outline -->
+    <path d="M440 110 L 830 105 L 880 260 L 740 420 L 400 400 Z"
+          fill="#4A9B8E" fill-opacity=".07"
+          stroke="#4A9B8E" stroke-opacity=".38" stroke-width="2.5" stroke-dasharray="10 8"/>
+  </svg>
+
   <div class="wrap closer-inner">
 
     <div class="closer-card">
