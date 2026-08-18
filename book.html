@@ -525,6 +525,10 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
       <input type="hidden" name="Install Location" id="floc">
       <input type="hidden" name="Existing Equipment" id="fexist">
       <input type="hidden" name="Well Tested Recently" id="ftested">
+      <input type="hidden" name="Main Line Size" id="fpipe">
+      <input type="hidden" name="Drain Nearby" id="fdrain">
+      <input type="hidden" name="Outlet Nearby" id="foutlet">
+      <input type="hidden" name="Access" id="faccess">
 
       <!-- everyone: household size drives daily demand -->
       <div class="counter" data-q="people">
@@ -575,6 +579,44 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
           <button type="button" class="pill">Garage</button>
           <button type="button" class="pill">Utility closet</button>
           <button type="button" class="pill">Crawlspace</button>
+          <button type="button" class="pill">Not sure</button>
+        </div>
+      </div>
+
+      <!-- installs only: what the installer needs to know before the van loads -->
+      <div class="qblock" data-q="plumbing">
+        <span class="qlabel">Main water line size, if you know it<small>Decides the bypass and fittings we bring</small></span>
+        <div class="pills" data-single="fpipe">
+          <button type="button" class="pill">3/4 inch</button>
+          <button type="button" class="pill">1 inch</button>
+          <button type="button" class="pill">Not sure</button>
+        </div>
+      </div>
+
+      <div class="qblock" data-q="drain">
+        <span class="qlabel">Near where the system goes, is there a floor drain or standpipe within about 20 feet?<small>A softener has to discharge somewhere</small></span>
+        <div class="pills" data-single="fdrain">
+          <button type="button" class="pill">Yes</button>
+          <button type="button" class="pill">No</button>
+          <button type="button" class="pill">Not sure</button>
+        </div>
+      </div>
+
+      <div class="qblock" data-q="outlet">
+        <span class="qlabel">Is there a power outlet within about 6 feet of that spot?<small>The valve head needs one</small></span>
+        <div class="pills" data-single="foutlet">
+          <button type="button" class="pill">Yes</button>
+          <button type="button" class="pill">No</button>
+          <button type="button" class="pill">Not sure</button>
+        </div>
+      </div>
+
+      <div class="qblock" data-q="access">
+        <span class="qlabel">How does the installer get to it?<small>Stairs and tight hatches change how long the job takes</small></span>
+        <div class="pills" data-single="faccess">
+          <button type="button" class="pill">Ground floor, easy</button>
+          <button type="button" class="pill">Down a staircase</button>
+          <button type="button" class="pill">Tight or low clearance</button>
           <button type="button" class="pill">Not sure</button>
         </div>
       </div>
@@ -864,7 +906,12 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
       symptoms: well || isTest,
       tested:   well,
       location: !isTest,
-      existing: !isTest
+      existing: !isTest,
+      // Only an actual install needs the van loaded correctly.
+      plumbing: !isTest,
+      drain:    !isTest,
+      outlet:   !isTest,
+      access:   !isTest
     };
 
     Object.keys(show).forEach(function (key) {
@@ -1055,6 +1102,10 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
     if (val('ftested'))         fd.append('Well Tested Recently', val('ftested'));
     if (val('floc'))            fd.append('Install Location', val('floc'));
     if (val('fexist'))          fd.append('Existing Equipment', val('fexist'));
+    if (val('fpipe'))           fd.append('Main Line Size', val('fpipe'));
+    if (val('fdrain'))          fd.append('Drain Nearby', val('fdrain'));
+    if (val('foutlet'))         fd.append('Outlet Nearby', val('foutlet'));
+    if (val('faccess'))         fd.append('Access', val('faccess'));
     if (val('faddr'))           fd.append('Address', val('faddr'));
     if (val('fcity'))           fd.append('City', val('fcity'));
     if (val('fzip'))            fd.append('ZIP', val('fzip'));
@@ -1083,6 +1134,10 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
       ['Well tested', visible('tested') ? val('ftested') : ''],
       ['System goes', val('floc')],
       ['Existing gear', val('fexist')],
+      ['Main line', val('fpipe')],
+      ['Drain nearby', val('fdrain')],
+      ['Outlet nearby', val('foutlet')],
+      ['Access', val('faccess')],
       ['Address', [val('faddr'), val('fcity'), val('fzip')].filter(Boolean).join(', ')],
       ['Date',    prettyDate(val('fdate'))],
       ['Time',    val('ftime')],

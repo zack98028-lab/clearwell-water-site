@@ -136,7 +136,9 @@ nav.links a.active,nav.links a:hover{color:var(--teal-deep);}
 }
 
 /* ---------- Hero (full-bleed photo, blur-to-clear on scroll) ---------- */
-.hero{position:relative; padding:110px 0 120px; overflow:hidden; isolation:isolate;}
+/* Top padding has to clear the sticky pill nav AND the quiz bar above it,
+   or the headline slides underneath them. */
+.hero{position:relative; padding:150px 0 120px; overflow:hidden; isolation:isolate;}
 .hero-bg-wrap{position:absolute; inset:0; z-index:-2; overflow:hidden;}
 /* Deliberately soft and blue: the photo reads as water texture, not as a
    literal kitchen sink. It eases clearer on scroll but never fully resolves. */
@@ -364,7 +366,7 @@ fieldset legend{font-size:13px; font-weight:600; color:var(--slate); padding:0 6
   .nav-call{display:block; color:var(--teal-deep); font-weight:600;}
 }
 @media (max-width: 900px){
-  .hero{padding:64px 0 80px;}
+  .hero{padding:120px 0 80px;}
   .hero-stats{gap:18px 0;}
   .hero-stats div{border-left:none; padding:0 18px; width:45%;}
   .foot-grid{grid-template-columns:1fr 1fr;}
@@ -462,6 +464,7 @@ fieldset legend{font-size:13px; font-weight:600; color:var(--slate); padding:0 6
 
 <div class="wrap">
   <div class="trust-strip">
+    <span><strong>Not a franchise</strong> &mdash; no brand markup on your invoice</span>
     <span><strong>Locally owned</strong> &mdash; based in Plymouth, MI</span>
     <span><strong>Flat pricing</strong> &mdash; published up front, before any work starts</span>
     <span><strong>You own it</strong> &mdash; the system is yours, day one</span>
@@ -680,6 +683,11 @@ fieldset legend{font-size:13px; font-weight:600; color:var(--slate); padding:0 6
 <section class="tight">
   <div class="wrap">
     <div class="section-head">
+      <span class="eyebrow">Why we cost less</span>
+      <h2>You're not paying for a national brand. You're paying for the equipment and the install.</h2>
+      <p style="color:#4d5a57; margin-top:14px;">The big names run call centres, regional managers, television spots and a commissioned salesman who drives to your house hoping to leave with a signature. That all lands on your invoice. We're a local outfit with published prices and independent installers &mdash; the same tanks and media, without the overhead stacked on top.</p>
+    </div>
+    <div class="section-head" style="margin-top:56px;">
       <span class="eyebrow">What this costs, honestly</span>
       <h2>The rental is the expensive option. It just doesn't feel like one.</h2>
       <p style="color:#4d5a57; margin-top:14px;">Rented softeners run about $25 to $100 a month industry-wide. At $35 a month, five years is roughly $2,100 &mdash; more than buying a comparable system outright, and at the end you still own nothing.</p>
