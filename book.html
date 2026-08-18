@@ -255,6 +255,12 @@ header.site .nav{max-width:var(--max); margin:0 auto; padding:14px 28px; display
 .wcard .ic{flex:none; width:21px; height:21px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11.5px; margin-top:1px;}
 .ic-warn{background:rgba(176,96,63,.14); color:var(--clay);}
 .ic-ok{background:rgba(74,155,142,.14); color:var(--teal-deep);}
+.wharm{
+  background:rgba(176,96,63,.09); border:1px solid rgba(176,96,63,.28);
+  border-radius:14px; padding:18px 20px; margin-bottom:14px;
+}
+.wharm .lbl{font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--clay); display:block; margin-bottom:7px;}
+.wharm p{font-size:14px; margin:0; color:#5c5148;}
 .wfix{background:var(--slate); color:var(--bone-white); border-radius:14px; padding:20px 22px;}
 .wfix .lbl{font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--stone); display:block; margin-bottom:7px;}
 .wfix p{font-size:14.5px; margin:0; color:#dbe4e2;}
@@ -958,6 +964,7 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
         ['warn','<b>Chlorinated.</b> Necessary on the way to you, and the reason it tastes the way it does.'],
         ['warn','<b>Testing stops at the street.</b> Nobody tests the pipe into your house. If it is an older lead service line or lead solder, that happens after the last sample.']
       ],
+      harm:'Lead is the one worth caring about. It enters after the last test, from your own service line or solder, and no amount of it is considered safe for children. The hardness is a money problem rather than a health one — it is quietly costing you a water heater.',
       fix:'A softener handles the hardness and protects your appliances. Carbon filtration takes out the chlorine taste and reduces lead picked up in your own plumbing. Most homes here need the softener; the filtration is what makes the water actually pleasant.'
     },
     ycua: {
@@ -968,6 +975,7 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
         ['warn','<b>Chlorinated.</b> Safe, but that is the taste people call us about.'],
         ['warn','<b>Your own plumbing is the unknown.</b> Utility testing ends before your house; lead from older pipe or solder enters after that.']
       ],
+      harm:'Lead is the real concern here too, and it comes from your own pipe rather than the utility. Children absorb it far more readily than adults, and there is no level considered safe for them.',
       fix:'A softener for the hardness and appliance life, carbon filtration for the taste and for lead picked up inside your own plumbing.'
     },
     other: {
@@ -976,6 +984,7 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
         ['warn','<b>We do not know this supply well enough to tell you about it.</b> We stay close to home on purpose, and we would rather point you at the real data than guess.'],
         ['ok','<b>Your utility still has to publish its results.</b> The link below pulls the testing data for your ZIP.']
       ],
+      harm:'',
       fix:'Carry on with the quiz and we will tell you honestly whether you are in our service area when we call.'
     }
   };
@@ -1007,6 +1016,7 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
         return '<div class="row"><span class="ic ' + (ok?'ic-ok':'ic-warn') + '">' +
                (ok?'&#10003;':'!') + '</span><span>' + r[1] + '</span></div>';
       }).join('') + '</div>' +
+      (d.harm ? '<div class="wharm"><span class="lbl">Why it matters</span><p>' + d.harm + '</p></div>' : '') +
       '<div class="wfix"><span class="lbl">What fixes it</span><p>' + d.fix + '</p></div>' +
       '<p class="wsrc">Want the raw numbers? <a href="https://www.ewg.org/tapwater/search-results.php?zip5=' +
         zip + '&searchtype=zip" target="_blank" rel="noopener">See the published test results for ' + zip + '</a>.</p>';

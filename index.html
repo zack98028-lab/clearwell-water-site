@@ -289,8 +289,18 @@ nav.links a.active,nav.links a:hover{color:var(--teal-deep);}
 .cmp-note{font-size:12.5px; color:#6f7b77; margin-top:14px;}
 
 /* ---------- Closing contact block ---------- */
-.closer{position:relative; background:var(--slate-deep); overflow:hidden; padding:96px 0 104px;}
-.closer-head{position:relative; z-index:2; text-align:center; max-width:820px; margin:0 auto 54px;}
+.closer{position:relative; background:var(--slate-deep); overflow:hidden; padding:70px 0 104px; min-height:940px;}
+/* The headline sits in its own darkened lane so it never lands on a town
+   label — the map underneath is dense on purpose. */
+.closer-head{
+  position:relative; z-index:2; text-align:center; max-width:900px;
+  margin:0 auto 300px; padding:26px 30px 30px; border-radius:24px;
+  background:radial-gradient(ellipse 78% 120% at 50% 50%, rgba(10,22,30,.92) 0%, rgba(10,22,30,.72) 55%, rgba(10,22,30,0) 100%);
+}
+@media(max-width:880px){
+  .closer{min-height:0; padding:70px 0 90px;}
+  .closer-head{margin-bottom:40px;}
+}
 .closer-head .kick{
   display:inline-block; font-size:11.5px; font-weight:700; letter-spacing:.18em;
   text-transform:uppercase; color:var(--slate-deep); background:var(--stone);
@@ -856,7 +866,7 @@ fieldset legend{font-size:13px; font-weight:600; color:var(--slate); padding:0 6
 <section class="closer">
   <!-- Stylised map of the service area: the freeways that actually bound it,
        the Huron River, and where each town sits relative to the others. -->
-  <svg class="closer-map" viewBox="0 0 1200 640" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+  <svg class="closer-map" viewBox="0 0 1200 940" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
     <defs>
       <linearGradient id="riv" x1="0" y1="0" x2="1" y2="1">
         <stop offset="0%" stop-color="#4A9B8E" stop-opacity=".9"/>
@@ -865,76 +875,115 @@ fieldset legend{font-size:13px; font-weight:600; color:var(--slate); padding:0 6
     </defs>
 
     <!-- section-line grid, like a plat map -->
-    <g stroke="#C9BBA0" stroke-opacity=".22" stroke-width="1.2">
-      <path d="M0 80h1200M0 160h1200M0 240h1200M0 320h1200M0 400h1200M0 480h1200M0 560h1200"/>
-      <path d="M80 0v640M240 0v640M400 0v640M560 0v640M720 0v640M880 0v640M1040 0v640"/>
+    <g stroke="#C9BBA0" stroke-opacity=".18" stroke-width="1.2">
+      <path d="M0 60h1200M0 160h1200M0 260h1200M0 360h1200M0 460h1200M0 560h1200M0 660h1200M0 760h1200M0 860h1200"/>
+      <path d="M100 0v940M200 0v940M300 0v940M400 0v940M500 0v940M600 0v940M700 0v940M800 0v940M900 0v940M1000 0v940M1100 0v940"/>
+    </g>
+
+    <!-- lakes -->
+    <g fill="#4A9B8E" fill-opacity=".22" stroke="#4A9B8E" stroke-opacity=".5" stroke-width="2">
+      <ellipse cx="215" cy="240" rx="52" ry="30"/>
+      <ellipse cx="150" cy="640" rx="40" ry="24"/>
+      <ellipse cx="1090" cy="720" rx="46" ry="26"/>
+    </g>
+    <g fill="#4A9B8E" fill-opacity=".55" font-family="Inter, sans-serif" font-size="12" font-style="italic">
+      <text x="176" y="244">Portage Lk</text>
+      <text x="118" y="644">Ford Lk</text>
+      <text x="1052" y="724">Belleville Lk</text>
     </g>
 
     <!-- Huron River -->
-    <path d="M120 120 C 300 210, 360 300, 470 360 S 700 470, 900 520"
-          fill="none" stroke="url(#riv)" stroke-width="12" stroke-linecap="round"/>
-    <text x="150" y="150" fill="#4A9B8E" fill-opacity=".85" font-family="Inter, sans-serif"
-          font-size="14" font-style="italic" font-weight="600">Huron River</text>
+    <path d="M170 170 C 300 280, 340 420, 430 520 S 660 690, 900 745 S 1080 760, 1200 790"
+          fill="none" stroke="url(#riv)" stroke-width="13" stroke-linecap="round"/>
+    <text x="238" y="330" fill="#4A9B8E" fill-opacity=".9" font-family="Inter, sans-serif"
+          font-size="15" font-style="italic" font-weight="600" transform="rotate(38 238 330)">Huron River</text>
 
     <!-- freeways: casing then fill, so they read like real highways -->
-    <g fill="none" stroke="#0E1D26" stroke-opacity=".55" stroke-width="11" stroke-linecap="round">
-      <path d="M840 0 V 640"/><path d="M300 0 V 640"/>
-      <path d="M0 200 H 1200"/><path d="M0 470 H 1200"/><path d="M980 0 L 1200 250"/>
+    <g fill="none" stroke="#0E1D26" stroke-opacity=".6" stroke-width="12" stroke-linecap="round">
+      <path d="M860 0 V 940"/><path d="M300 0 V 940"/>
+      <path d="M0 300 H 1200"/><path d="M0 700 H 1200"/><path d="M960 0 L 1200 300"/><path d="M0 120 H 1200"/>
     </g>
-    <g fill="none" stroke="#E4DBC8" stroke-opacity=".78" stroke-width="5" stroke-linecap="round">
-      <path d="M840 0 V 640"/>            <!-- I-275 -->
-      <path d="M300 0 V 640"/>            <!-- US-23 -->
-      <path d="M0 200 H 1200"/>           <!-- M-14 -->
-      <path d="M0 470 H 1200"/>           <!-- I-94 -->
-      <path d="M980 0 L 1200 250"/>       <!-- I-96 -->
+    <g fill="none" stroke="#E4DBC8" stroke-opacity=".8" stroke-width="5.5" stroke-linecap="round">
+      <path d="M860 0 V 940"/>            <!-- I-275 -->
+      <path d="M300 0 V 940"/>            <!-- US-23 -->
+      <path d="M0 300 H 1200"/>           <!-- M-14 -->
+      <path d="M0 700 H 1200"/>           <!-- I-94 -->
+      <path d="M960 0 L 1200 300"/>       <!-- I-96 -->
+      <path d="M0 120 H 1200"/>           <!-- I-96 / Grand River -->
     </g>
     <g font-family="Inter, sans-serif" font-size="15" font-weight="700">
       <g fill="#152A37">
-        <rect x="856" y="26" width="56" height="24" rx="5"/>
-        <rect x="316" y="26" width="64" height="24" rx="5"/>
-        <rect x="22" y="172" width="58" height="24" rx="5"/>
-        <rect x="22" y="442" width="48" height="24" rx="5"/>
+        <rect x="874" y="866" width="58" height="26" rx="5"/>
+        <rect x="316" y="866" width="66" height="26" rx="5"/>
+        <rect x="26" y="272" width="60" height="26" rx="5"/>
+        <rect x="26" y="672" width="50" height="26" rx="5"/>
+        <rect x="26" y="92" width="50" height="26" rx="5"/>
       </g>
       <g fill="#E4DBC8">
-        <text x="864" y="44">I-275</text>
-        <text x="324" y="44">US-23</text>
-        <text x="30" y="190">M-14</text>
-        <text x="30" y="460">I-94</text>
+        <text x="883" y="885">I-275</text>
+        <text x="325" y="885">US-23</text>
+        <text x="35" y="291">M-14</text>
+        <text x="35" y="691">I-94</text>
+        <text x="35" y="111">I-96</text>
       </g>
     </g>
 
     <!-- core service area, drawn under the pins -->
-    <path d="M440 110 L 830 105 L 880 260 L 740 420 L 400 400 Z"
+    <path d="M420 400 L 700 350 L 900 420 L 930 640 L 700 790 L 420 720 L 360 540 Z"
           fill="#4A9B8E" fill-opacity=".16"
           stroke="#4A9B8E" stroke-opacity=".9" stroke-width="4" stroke-dasharray="14 9"/>
+    <text x="470" y="586" fill="#4A9B8E" fill-opacity=".8" font-family="Inter, sans-serif"
+          font-size="13" font-weight="700" letter-spacing="3">CORE SERVICE AREA</text>
 
-    <!-- towns -->
+    <!-- towns: core three, then the rest we cover, then neighbours -->
     <g font-family="Inter, sans-serif" font-weight="700">
       <g fill="#4A9B8E" stroke="#0E1D26" stroke-width="3">
-        <circle cx="640" cy="230" r="13"/><circle cx="700" cy="360" r="13"/><circle cx="800" cy="140" r="13"/>
+        <circle cx="700" cy="470" r="14"/><circle cx="740" cy="620" r="14"/><circle cx="820" cy="400" r="14"/>
       </g>
-      <g fill="#FBFAF7" font-size="21" stroke="#0E1D26" stroke-width="4" paint-order="stroke">
-        <text x="664" y="238">Plymouth</text>
-        <text x="724" y="368">Canton</text>
-        <text x="824" y="148">Northville</text>
+      <g fill="#FBFAF7" font-size="22" stroke="#0E1D26" stroke-width="4.5" paint-order="stroke">
+        <text x="726" y="478">Plymouth</text>
+        <text x="766" y="628">Canton</text>
+        <text x="846" y="408">Northville</text>
       </g>
 
       <g fill="#C9BBA0" stroke="#0E1D26" stroke-width="3">
-        <circle cx="470" cy="140" r="11"/><circle cx="430" cy="330" r="11"/><circle cx="330" cy="440" r="11"/>
+        <circle cx="470" cy="420" r="12"/><circle cx="470" cy="600" r="12"/><circle cx="390" cy="690" r="12"/>
       </g>
       <g fill="#E4DBC8" font-size="18" stroke="#0E1D26" stroke-width="4" paint-order="stroke">
-        <text x="490" y="147">Salem Twp</text>
-        <text x="450" y="337">Superior Twp</text>
-        <text x="350" y="447">Ypsilanti</text>
+        <text x="490" y="427">Salem Twp</text>
+        <text x="490" y="607">Superior Twp</text>
+        <text x="410" y="697">Ypsilanti</text>
       </g>
 
-      <g fill="#C9BBA0" fill-opacity=".6" stroke="#0E1D26" stroke-width="2.5">
-        <circle cx="1000" cy="300" r="8"/><circle cx="960" cy="90" r="8"/><circle cx="330" cy="60" r="8"/>
+      <g fill="#C9BBA0" fill-opacity=".62" stroke="#0E1D26" stroke-width="2.5">
+        <circle cx="1000" cy="520" r="9"/><circle cx="950" cy="270" r="9"/><circle cx="330" cy="200" r="9"/>
       </g>
-      <g fill="#E4DBC8" fill-opacity=".72" font-size="14" font-weight="600" stroke="#0E1D26" stroke-width="3" paint-order="stroke">
-        <text x="1016" y="306">Livonia</text>
-        <text x="976" y="96">Novi</text>
-        <text x="346" y="66">South Lyon</text>
+      <g fill="#E4DBC8" fill-opacity=".78" font-size="15" font-weight="600" stroke="#0E1D26" stroke-width="3.5" paint-order="stroke">
+        <text x="1016" y="526">Livonia</text>
+        <text x="966" y="276">Novi</text>
+        <text x="346" y="206">South Lyon</text>
+      </g>
+
+      <!-- surrounding places, for orientation only -->
+      <g fill="#C9BBA0" fill-opacity=".34" stroke="#0E1D26" stroke-width="2">
+        <circle cx="250" cy="560" r="7"/><circle cx="150" cy="420" r="7"/><circle cx="240" cy="790" r="7"/>
+        <circle cx="1080" cy="380" r="7"/><circle cx="1110" cy="620" r="7"/><circle cx="880" cy="820" r="7"/>
+        <circle cx="640" cy="820" r="7"/><circle cx="1050" cy="150" r="7"/><circle cx="560" cy="200" r="7"/>
+        <circle cx="180" cy="120" r="7"/><circle cx="700" cy="150" r="7"/><circle cx="1140" cy="840" r="7"/>
+      </g>
+      <g fill="#E4DBC8" fill-opacity=".5" font-size="13" font-weight="600" stroke="#0E1D26" stroke-width="3" paint-order="stroke">
+        <text x="264" y="565">Ann Arbor</text>
+        <text x="164" y="425">Dexter</text>
+        <text x="254" y="795">Saline</text>
+        <text x="1094" y="385">Farmington</text>
+        <text x="1124" y="625">Westland</text>
+        <text x="894" y="825">Romulus</text>
+        <text x="654" y="825">Belleville</text>
+        <text x="1064" y="155">Wixom</text>
+        <text x="574" y="205">Whitmore Lake</text>
+        <text x="194" y="125">Brighton</text>
+        <text x="714" y="155">Milford</text>
+        <text x="1090" y="866">Taylor</text>
       </g>
     </g>
   </svg>
@@ -1098,9 +1147,10 @@ document.addEventListener('DOMContentLoaded', function () {
   };
   var WELL = {
     kind: 'well',
-    system: 'This area has a lot of private wells',
+    system: 'A lot of homes here are on private wells',
     lines: [
-      ['warn', '<b>Nobody tests a private well but you.</b> There is no utility, no annual report, and no legal requirement to test after the well is drilled. Whatever is in it has been in it.'],
+      ['warn', '<b>There is no record of your water to look up. None exists.</b> A private well has no utility behind it, no annual report, and no testing requirement after the day it was drilled. This is the one job we cannot do from a desk &mdash; we have to come out and test it.'],
+      ['warn', '<b>Nobody tests a private well but you.</b> Whatever is in it has been in it.'],
       ['warn', '<b>Arsenic occurs naturally in this bedrock.</b> Washtenaw County sits over the Marshall Sandstone, and the USGS estimates roughly a 1 in 8 chance a well here exceeds the federal arsenic limit. It has no taste, no smell and no color — a lab test is the only way to know.'],
       ['warn', '<b>Coliform bacteria and nitrates are invisible too.</b> Nitrates matter most for infants and pregnant women. Neither one announces itself.'],
       ['warn', '<b>Iron, manganese and sulfur are the ones you can sense</b> — orange staining, black specks, rotten-egg smell, metallic taste.']
@@ -1166,7 +1216,7 @@ document.addEventListener('DOMContentLoaded', function () {
       '<p class="sys">' + d.system + '</p>' +
       '<ul>' + items + '</ul>' +
       (isWell
-        ? '<p style="font-size:14px; color:#4d5a57;">This is the one case where we do have to come out — well water genuinely cannot be sized from a desk. The test itself is free and there is no obligation after it.</p>'
+        ? '<p style="font-size:14px; color:#4d5a57;">The test is free and there is no obligation after it. If your home here is actually on city water, tell us when you book &mdash; we will read your utility\'s published results instead and skip the visit entirely.</p>'
         : '<p style="font-size:14px; color:#4d5a57;">Want the raw numbers? The Environmental Working Group publishes your utility\'s own test results — <a href="' + ewgLink(zip) + '" target="_blank" rel="noopener" style="color:var(--teal-deep); font-weight:600;">see the full report for ' + zip + '</a>.</p>') +
       '<div class="acts">' + cta +
         '<a href="tel:+17343065475" class="btn btn-outline">Or just call us</a>' +
