@@ -309,6 +309,11 @@ header.site .nav{max-width:var(--max); margin:0 auto; padding:14px 28px; display
   font-size:15px; font-weight:600; padding:16px 22px;
 }
 .btn-ghost:hover{background:rgba(31,59,77,.13);}
+.backlink{
+  background:none; border:0; cursor:pointer; font-family:inherit;
+  font-size:14.5px; color:#6b7773; padding:6px;
+}
+.backlink:hover{color:var(--slate);}
 .err{color:var(--clay); font-size:14px; margin:16px auto 0; max-width:440px; display:none;}
 .err.on{display:block;}
 
@@ -434,24 +439,27 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
 
     <!-- 3 — what's in your water (city water only) -->
     <section class="step" data-step="3" data-stage="2" data-skip="city-only">
-      <h2>Let's look at your water.</h2>
-      <p class="sub">Your utility already tests it and publishes the results. Give us your ZIP and we'll tell you what that actually means.</p>
+      <h2>Want to see what's in your water first?</h2>
+      <p class="sub">Optional. Your utility tests it and publishes the results by law &mdash; we'll read them for you. Or skip straight to booking if you already know what you want.</p>
 
       <input type="hidden" name="ZIP checked" id="fzipchk">
 
       <div class="field">
         <label for="zipq">ZIP code</label>
         <input type="text" id="zipq" inputmode="numeric" maxlength="5" placeholder="48170">
+        <p class="hint">A ZIP tells us which utility most likely serves you, not your exact tap. We'll confirm your street address when we call.</p>
       </div>
 
       <div class="actions" id="zipActions">
         <button type="button" class="btn btn-teal" id="zipCheck">Check my water</button>
-        <button type="button" class="btn btn-ghost" data-back>&larr; Back</button>
+        <button type="button" class="btn btn-ghost" data-next>Skip &rarr;</button>
       </div>
+
+      <p style="margin:14px 0 0;"><button type="button" class="backlink" data-back>&larr; Back</button></p>
 
       <div class="wresult" id="wresult"></div>
 
-      <p class="err" data-err>Enter your five-digit ZIP so we can look it up.</p>
+      <p class="err" data-err>Enter your five-digit ZIP, or skip this step.</p>
     </section>
 
     <!-- 4 — service -->
