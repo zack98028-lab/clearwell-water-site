@@ -83,6 +83,7 @@ img{max-width:100%; display:block;}
 .btn-outline:hover{background:var(--slate); color:var(--bone-white);}
 .btn-teal{background:var(--teal); color:var(--bone-white);}
 .btn-teal:hover{background:var(--teal-deep);}
+.btn-xl{font-size:17px; padding:18px 38px; box-shadow:0 10px 26px rgba(74,155,142,.32);}
 
 /* ---------- Header (floating pill nav) ---------- */
 .header-perch{position:sticky; top:0; z-index:50; padding:18px 20px 0; background:linear-gradient(var(--bone) 60%, transparent);}
@@ -289,7 +290,7 @@ nav.links a.active,nav.links a:hover{color:var(--teal-deep);}
 .cmp-note{font-size:12.5px; color:#6f7b77; margin-top:14px;}
 
 /* ---------- Closing contact block ---------- */
-.closer{position:relative; background:var(--slate-deep); overflow:hidden; padding:70px 0 104px; min-height:940px;}
+.closer{position:relative; background:var(--slate-deep); overflow:hidden; padding:120px 0 120px; min-height:820px;}
 /* The headline sits in its own darkened lane so it never lands on a town
    label — the map underneath is dense on purpose. */
 .closer-head{
@@ -311,9 +312,11 @@ nav.links a.active,nav.links a:hover{color:var(--teal-deep);}
   letter-spacing:-.025em; margin:0;
 }
 .closer-head h2 em{font-style:normal; color:var(--teal);}
+/* meet, not slice: the whole county fits in frame rather than being cropped,
+   so every town we label is actually on screen. */
 .closer-map{
   position:absolute; inset:0; width:100%; height:100%;
-  object-fit:cover; opacity:1; pointer-events:none;
+  opacity:1; pointer-events:none;
 }
 .closer::after{
   content:""; position:absolute; inset:0;
@@ -432,6 +435,18 @@ fieldset legend{font-size:13px; font-weight:600; color:var(--slate); padding:0 6
 /* The drawer definition lives at the SAME breakpoint that hides the nav.
    Splitting them once left widths where the menu was hidden with no rule
    able to reopen it. */
+/* On a phone the pill nav only has room for the logo and the burger — the
+   quote CTA lives in the drawer instead, or the header overflows the screen. */
+@media (max-width: 560px){
+  .nav-cta .btn-primary{display:none;}
+  .header-perch{padding:12px 12px 0;}
+  header.site{padding:0 6px 0 16px;}
+  .logo{font-size:17px;}
+  .announce{padding:11px 16px;}
+  .announce .lead{font-size:11.5px; letter-spacing:.05em;}
+  .hero-actions{flex-direction:column; align-items:stretch;}
+  .hero-actions .btn{width:100%;}
+}
 @media (max-width: 940px){
   nav.links{
     display:none;
@@ -516,9 +531,9 @@ fieldset legend{font-size:13px; font-weight:600; color:var(--slate); padding:0 6
 </header>
 <a class="announce" href="#checkWater">
   <span class="dot"></span>
-  <span class="lead">Take the water quiz</span>
+  <span class="lead">Roughly half what the big names charge</span>
   <span class="sep"></span>
-  <span class="tail">Find out what's in your water free &mdash; no appointment, no salesman</span>
+  <span class="tail">And nobody has to come to your house to tell you what's in your water</span>
   <span class="arw">&rarr;</span>
 </a>
 </div>
@@ -529,12 +544,12 @@ fieldset legend{font-size:13px; font-weight:600; color:var(--slate); padding:0 6
     <div class="hero-bg-overlay"></div>
   </div>
   <div class="wrap hero-inner">
-    <p class="hero-kicker"><span class="rule"></span>Take the water quiz<span class="rule"></span></p>
+    <p class="hero-kicker"><span class="rule"></span>Plymouth &middot; Canton &middot; Ypsilanti<span class="rule"></span></p>
     <h1>Know your water.<br>Own your system.</h1>
-    <p class="lede">Find out what's actually in your water &mdash; free, online, without anyone setting foot in your house.</p>
+    <p class="lede">A national brand will quote you <strong style="color:#fff;">$6,500</strong> after sending a salesman to your kitchen. Ours run <strong style="color:#fff;">$2,000&ndash;3,500</strong>, printed on this page &mdash; and we'll tell you what's in your water for free, online, before you speak to anyone.</p>
     <div class="hero-actions">
-      <a href="#checkWater" class="btn btn-teal">Check my water free</a>
-      <a href="book.html" class="btn btn-outline">Get a free quote</a>
+      <a href="#checkWater" class="btn btn-teal btn-xl">Check my water &mdash; free</a>
+      <a href="tel:+17343065475" class="btn btn-outline">Or call (734) 306-5475</a>
     </div>
     <div class="hero-stats">
       <div><span class="num">7&ndash;13</span><span class="lbl">grains per gallon hardness,<br>typical GLWA municipal water</span></div>
@@ -866,7 +881,7 @@ fieldset legend{font-size:13px; font-weight:600; color:var(--slate); padding:0 6
 <section class="closer">
   <!-- Stylised map of the service area: the freeways that actually bound it,
        the Huron River, and where each town sits relative to the others. -->
-  <svg class="closer-map" viewBox="0 0 1200 940" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+  <svg class="closer-map" viewBox="0 0 1200 940" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">
     <defs>
       <linearGradient id="riv" x1="0" y1="0" x2="1" y2="1">
         <stop offset="0%" stop-color="#4A9B8E" stop-opacity=".9"/>
@@ -929,30 +944,30 @@ fieldset legend{font-size:13px; font-weight:600; color:var(--slate); padding:0 6
     </g>
 
     <!-- core service area, drawn under the pins -->
-    <path d="M420 400 L 700 350 L 900 420 L 930 640 L 700 790 L 420 720 L 360 540 Z"
+    <path d="M420 300 L 700 250 L 900 320 L 930 520 L 700 650 L 420 590 L 360 430 Z"
           fill="#4A9B8E" fill-opacity=".16"
           stroke="#4A9B8E" stroke-opacity=".9" stroke-width="4" stroke-dasharray="14 9"/>
-    <text x="470" y="586" fill="#4A9B8E" fill-opacity=".8" font-family="Inter, sans-serif"
+    <text x="470" y="470" fill="#4A9B8E" fill-opacity=".8" font-family="Inter, sans-serif"
           font-size="13" font-weight="700" letter-spacing="3">CORE SERVICE AREA</text>
 
     <!-- towns: core three, then the rest we cover, then neighbours -->
     <g font-family="Inter, sans-serif" font-weight="700">
       <g fill="#4A9B8E" stroke="#0E1D26" stroke-width="3">
-        <circle cx="700" cy="470" r="14"/><circle cx="740" cy="620" r="14"/><circle cx="820" cy="400" r="14"/>
+        <circle cx="700" cy="370" r="14"/><circle cx="740" cy="510" r="14"/><circle cx="820" cy="300" r="14"/>
       </g>
       <g fill="#FBFAF7" font-size="22" stroke="#0E1D26" stroke-width="4.5" paint-order="stroke">
-        <text x="726" y="478">Plymouth</text>
-        <text x="766" y="628">Canton</text>
-        <text x="846" y="408">Northville</text>
+        <text x="726" y="378">Plymouth</text>
+        <text x="766" y="518">Canton</text>
+        <text x="846" y="308">Northville</text>
       </g>
 
       <g fill="#C9BBA0" stroke="#0E1D26" stroke-width="3">
-        <circle cx="470" cy="420" r="12"/><circle cx="470" cy="600" r="12"/><circle cx="390" cy="690" r="12"/>
+        <circle cx="470" cy="330" r="12"/><circle cx="470" cy="500" r="12"/><circle cx="390" cy="580" r="12"/>
       </g>
       <g fill="#E4DBC8" font-size="18" stroke="#0E1D26" stroke-width="4" paint-order="stroke">
-        <text x="490" y="427">Salem Twp</text>
-        <text x="490" y="607">Superior Twp</text>
-        <text x="410" y="697">Ypsilanti</text>
+        <text x="490" y="337">Salem Twp</text>
+        <text x="490" y="507">Superior Twp</text>
+        <text x="410" y="587">Ypsilanti</text>
       </g>
 
       <g fill="#C9BBA0" fill-opacity=".62" stroke="#0E1D26" stroke-width="2.5">
@@ -987,11 +1002,6 @@ fieldset legend{font-size:13px; font-weight:600; color:var(--slate); padding:0 6
       </g>
     </g>
   </svg>
-
-  <div class="wrap closer-head">
-    <span class="kick">Western Wayne &amp; eastern Washtenaw</span>
-    <h2>This is our whole map.<br><em>That's the point.</em></h2>
-  </div>
 
   <div class="wrap closer-inner">
 
