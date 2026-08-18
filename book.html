@@ -244,6 +244,23 @@ header.site .nav{max-width:var(--max); margin:0 auto; padding:14px 28px; display
 .pill.on{background:var(--slate); border-color:var(--slate); color:#fff;}
 .pill.on.multi{background:var(--teal-deep); border-color:var(--teal-deep);}
 
+/* ---------- In-quiz water result ---------- */
+.wresult{display:none; max-width:460px; margin:26px auto 0; text-align:left;}
+.wresult.on{display:block; animation:slideFwd .42s cubic-bezier(.22,.68,.28,1) both;}
+.wresult .sys{font-size:12.5px; color:#7d8783; margin-bottom:16px;}
+.wcard{background:var(--bone-white); border:1px solid var(--line); border-radius:14px; padding:4px 20px; margin-bottom:16px;}
+.wcard .row{display:flex; gap:12px; padding:14px 0; border-bottom:1px solid var(--line); font-size:14px; line-height:1.5;}
+.wcard .row:last-child{border-bottom:0;}
+.wcard .row b{color:var(--slate);}
+.wcard .ic{flex:none; width:21px; height:21px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11.5px; margin-top:1px;}
+.ic-warn{background:rgba(176,96,63,.14); color:var(--clay);}
+.ic-ok{background:rgba(74,155,142,.14); color:var(--teal-deep);}
+.wfix{background:var(--slate); color:var(--bone-white); border-radius:14px; padding:20px 22px;}
+.wfix .lbl{font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--stone); display:block; margin-bottom:7px;}
+.wfix p{font-size:14.5px; margin:0; color:#dbe4e2;}
+.wsrc{font-size:12.5px; color:#7d8783; margin-top:12px;}
+.wsrc a{color:var(--teal-deep); font-weight:600;}
+
 /* ---------- Date strip &amp; time slots ---------- */
 .daystrip{
   display:flex; gap:10px; overflow-x:auto; padding:4px 2px 14px;
@@ -415,8 +432,30 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
       <p class="err" data-err>Pick one so we know what to bring.</p>
     </section>
 
-    <!-- 3 — service -->
-    <section class="step" data-step="3" data-stage="2" data-wide>
+    <!-- 3 — what's in your water (city water only) -->
+    <section class="step" data-step="3" data-stage="2" data-skip="city-only">
+      <h2>Let's look at your water.</h2>
+      <p class="sub">Your utility already tests it and publishes the results. Give us your ZIP and we'll tell you what that actually means.</p>
+
+      <input type="hidden" name="ZIP checked" id="fzipchk">
+
+      <div class="field">
+        <label for="zipq">ZIP code</label>
+        <input type="text" id="zipq" inputmode="numeric" maxlength="5" placeholder="48170">
+      </div>
+
+      <div class="actions" id="zipActions">
+        <button type="button" class="btn btn-teal" id="zipCheck">Check my water</button>
+        <button type="button" class="btn btn-ghost" data-back>&larr; Back</button>
+      </div>
+
+      <div class="wresult" id="wresult"></div>
+
+      <p class="err" data-err>Enter your five-digit ZIP so we can look it up.</p>
+    </section>
+
+    <!-- 4 — service -->
+    <section class="step" data-step="4" data-stage="2" data-wide>
       <h2>Choose your service.</h2>
       <p class="sub">Already know what you want? Pick it and skip the test. Not sure? Start free.</p>
       <input type="hidden" name="Service" id="fservice">
@@ -467,8 +506,8 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
       <p class="err" data-err>Choose one to keep going.</p>
     </section>
 
-    <!-- 4 — about the home (questions change with the service picked) -->
-    <section class="step" data-step="4" data-stage="2">
+    <!-- 5 — about the home (questions change with the service picked) -->
+    <section class="step" data-step="5" data-stage="2">
       <h2 id="homeTitle">A bit about your home.</h2>
       <p class="sub" id="homeSub">This is what actually sizes the system, so we quote a real number instead of a guess.</p>
 
@@ -551,8 +590,8 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
       <p class="err" data-err>Please answer the questions above so we can size this properly.</p>
     </section>
 
-    <!-- 5 — address -->
-    <section class="step" data-step="5" data-stage="3">
+    <!-- 6 — address -->
+    <section class="step" data-step="6" data-stage="3">
       <h2>Where are we headed?</h2>
       <p class="sub">We serve Plymouth, Canton, Salem Township, Northville, Superior Township and Ypsilanti.</p>
       <div class="field">
@@ -588,8 +627,8 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
       <p class="err" data-err>We need a street address and a city.</p>
     </section>
 
-    <!-- 6 — date -->
-    <section class="step" data-step="6" data-stage="3">
+    <!-- 7 — date -->
+    <section class="step" data-step="7" data-stage="3">
       <h2>When suits you?</h2>
       <p class="sub">Pick a day that works. We'll confirm the exact window when we call.</p>
       <input type="hidden" id="fdate" name="Preferred Date">
@@ -626,8 +665,8 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
       <p class="err" data-err>Please pick a preferred date.</p>
     </section>
 
-    <!-- 6 — review -->
-    <section class="step" data-step="7" data-stage="4">
+    <!-- 8 — review -->
+    <section class="step" data-step="8" data-stage="4">
       <h2>Does this look right?</h2>
       <p class="sub">Send it over and we'll call to confirm. Nothing is charged online.</p>
       <dl class="review" id="review"></dl>
@@ -638,8 +677,8 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
       <p class="err" data-err></p>
     </section>
 
-    <!-- 7 — done -->
-    <section class="step" data-step="8" data-stage="4">
+    <!-- 9 — done -->
+    <section class="step" data-step="9" data-stage="4">
       <div class="mark">&#10003;</div>
       <h2>Request sent.</h2>
       <p class="sub" id="doneSub">We'll call within one business day to confirm your date and time window.</p>
@@ -839,20 +878,127 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
     return el && el.style.display !== 'none';
   }
 
+  // ---- In-quiz water check (city water only) ---------------------------
+  // Honest by design: we say what is knowable about the supply and link to
+  // the published data. We never invent a contaminant number.
+  var SUPPLY = {
+    glwa: {
+      name:'Great Lakes Water Authority &mdash; Lake Huron and the Detroit River',
+      rows:[
+        ['ok','<b>Safe to drink.</b> It is treated, tested continuously, and meets state and federal standards. You do not need a filter to make this water safe.'],
+        ['warn','<b>Hard &mdash; about 7 to 13 grains per gallon.</b> That is the scale on your fixtures, the short life of your water heater, and why soap will not lather.'],
+        ['warn','<b>Chlorinated.</b> Necessary on the way to you, and the reason it tastes the way it does.'],
+        ['warn','<b>Testing stops at the street.</b> Nobody tests the pipe into your house. If it is an older lead service line or lead solder, that happens after the last sample.']
+      ],
+      fix:'A softener handles the hardness and protects your appliances. Carbon filtration takes out the chlorine taste and reduces lead picked up in your own plumbing. Most homes here need the softener; the filtration is what makes the water actually pleasant.'
+    },
+    ycua: {
+      name:'Ypsilanti Community Utilities Authority &mdash; the Detroit River',
+      rows:[
+        ['ok','<b>Safe to drink, and no PFAS detected</b> in this supply. The Huron River PFAS in the news affects surface water and fish, not this drinking water source.'],
+        ['warn','<b>Hard water.</b> Same scale and same soap problem as the rest of the region.'],
+        ['warn','<b>Chlorinated.</b> Safe, but that is the taste people call us about.'],
+        ['warn','<b>Your own plumbing is the unknown.</b> Utility testing ends before your house; lead from older pipe or solder enters after that.']
+      ],
+      fix:'A softener for the hardness and appliance life, carbon filtration for the taste and for lead picked up inside your own plumbing.'
+    },
+    other: {
+      name:'Outside our mapped area',
+      rows:[
+        ['warn','<b>We do not know this supply well enough to tell you about it.</b> We stay close to home on purpose, and we would rather point you at the real data than guess.'],
+        ['ok','<b>Your utility still has to publish its results.</b> The link below pulls the testing data for your ZIP.']
+      ],
+      fix:'Carry on with the quiz and we will tell you honestly whether you are in our service area when we call.'
+    }
+  };
+  var ZIPMAP = {
+    '48170':'glwa','48187':'glwa','48188':'glwa','48167':'glwa','48168':'glwa',
+    '48150':'glwa','48152':'glwa','48154':'glwa',
+    '48374':'glwa','48375':'glwa','48377':'glwa',
+    '48197':'ycua','48198':'ycua'
+  };
+
+  var zipCheck = document.getElementById('zipCheck');
+  var zipQ     = document.getElementById('zipq');
+  var wres     = document.getElementById('wresult');
+  var zipDone  = false;
+
+  function runZipCheck(){
+    var zip = (zipQ.value || '').replace(/\D/g,'').slice(0,5);
+    var err = steps[3].querySelector('[data-err]');
+    if (zip.length !== 5) { err.classList.add('on'); return; }
+    err.classList.remove('on');
+
+    var d = SUPPLY[ZIPMAP[zip] || 'other'];
+    document.getElementById('fzipchk').value = zip;
+
+    wres.innerHTML =
+      '<p class="sys">' + d.name + '</p>' +
+      '<div class="wcard">' + d.rows.map(function (r) {
+        var ok = r[0] === 'ok';
+        return '<div class="row"><span class="ic ' + (ok?'ic-ok':'ic-warn') + '">' +
+               (ok?'&#10003;':'!') + '</span><span>' + r[1] + '</span></div>';
+      }).join('') + '</div>' +
+      '<div class="wfix"><span class="lbl">What fixes it</span><p>' + d.fix + '</p></div>' +
+      '<p class="wsrc">Want the raw numbers? <a href="https://www.ewg.org/tapwater/search-results.php?zip5=' +
+        zip + '&searchtype=zip" target="_blank" rel="noopener">See the published test results for ' + zip + '</a>.</p>';
+    wres.className = 'wresult on';
+
+    zipDone = true;
+    zipCheck.textContent = 'Continue';
+    wres.scrollIntoView({ behavior:'smooth', block:'nearest' });
+  }
+
+  if (zipCheck) {
+    zipCheck.addEventListener('click', function () {
+      if (zipDone) { show(nextIndex(at, 1)); return; }
+      runZipCheck();
+    });
+    zipQ.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') { e.preventDefault(); zipCheck.click(); }
+    });
+    // Editing the ZIP after a lookup re-arms the check, so a corrected ZIP
+    // gets looked up again instead of silently skipping ahead.
+    zipQ.addEventListener('input', function () {
+      if (!zipDone) return;
+      zipDone = false;
+      zipCheck.textContent = 'Check my water';
+      wres.className = 'wresult';
+      document.getElementById('fzipchk').value = '';
+    });
+  }
+
+  // A step can opt out of the flow — the water check is city-water only.
+  function skipped(i){
+    var s = steps[i];
+    if (!s) return false;
+    if (s.dataset.skip === 'city-only') {
+      return picked('Water Source') !== 'City / municipal water';
+    }
+    return false;
+  }
+
+  function nextIndex(from, dir){
+    var i = from + dir;
+    while (i > 0 && i < steps.length - 1 && skipped(i)) i += dir;
+    return Math.min(Math.max(i, 0), steps.length - 1);
+  }
+
   // What must be filled before each step lets you move on.
   function missing(i){
     if (i === 0) return !val('fname');
     if (i === 1) return !val('fphone');
     if (i === 2) return !picked('Water Source');
-    if (i === 3) return !service();
-    if (i === 4) {
+    if (i === 3) return false;              // water check drives its own button
+    if (i === 4) return !service();
+    if (i === 5) {
       if (visible('location') && !val('floc'))   return true;
       if (visible('existing') && !val('fexist')) return true;
       if (visible('tested')   && !val('ftested'))return true;
       return false;
     }
-    if (i === 5) return !val('faddr') || !val('fcity');
-    if (i === 6) return !val('fdate');
+    if (i === 6) return !val('faddr') || !val('fcity');
+    if (i === 7) return !val('fdate');
     return false;
   }
 
@@ -922,6 +1068,7 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
       ['Phone',   val('fphone')],
       ['Email',   val('femail')],
       ['Water',   picked('Water Source')],
+      ['ZIP checked', val('fzipchk')],
       ['Service', service()],
       ['Household', val('fpeople') + ' people' + (visible('baths') ? ', ' + val('fbaths') + ' bathrooms' : '')],
       ['Noticing', val('fsymp')],
@@ -953,7 +1100,7 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
     var err = card.closest('.step').querySelector('[data-err]');
     if (err) err.classList.remove('on');
     tuneHomeStep();                       // the next step depends on this choice
-    setTimeout(function () { show(at + 1); }, 180);
+    setTimeout(function () { show(nextIndex(at, 1)); }, 180);
   });
 
   form.addEventListener('click', function (e) {
@@ -968,9 +1115,9 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
       if (missing(at)) { if (err) err.classList.add('on'); return; }
       if (err) err.classList.remove('on');
       if (at === REVIEW - 1) buildReview();
-      show(at + 1);
+      show(nextIndex(at, 1));
     } else {
-      show(at - 1);
+      show(nextIndex(at, -1));
     }
   });
 
