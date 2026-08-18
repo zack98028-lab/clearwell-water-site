@@ -57,7 +57,7 @@ Clearwell Water Filtration — residential water treatment.
 | Water softener (most common) | $2,000–3,500 installed |
 | Whole-home filtration | $1,000–4,500 |
 | Under-sink RO (add-on) | $300–2,500 |
-| Well water treatment | $3,000–8,000+ bundled |
+| Well water treatment | $6,500–8,000 bundled |
 
 ## Files
 

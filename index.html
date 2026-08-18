@@ -99,6 +99,7 @@ header.site{
   text-decoration:none;
 }
 .logo .mark{width:34px; height:34px; flex:none;}
+.logo > span, .logo{white-space:nowrap;}
 .logo small{
   display:block; font-family:'Inter'; font-weight:600; font-size:9px;
   letter-spacing:0.16em; color:var(--teal-deep); margin-top:-2px;
@@ -137,7 +138,9 @@ nav.links a.active,nav.links a:hover{color:var(--teal-deep);}
 /* ---------- Hero (full-bleed photo, blur-to-clear on scroll) ---------- */
 .hero{position:relative; padding:110px 0 120px; overflow:hidden; isolation:isolate;}
 .hero-bg-wrap{position:absolute; inset:0; z-index:-2; overflow:hidden;}
-.hero-bg-img{width:100%; height:100%; object-fit:cover; filter:blur(3px); transform:scale(1.12); will-change:transform, filter;}
+/* Deliberately soft and blue: the photo reads as water texture, not as a
+   literal kitchen sink. It eases clearer on scroll but never fully resolves. */
+.hero-bg-img{width:100%; height:100%; object-fit:cover; filter:blur(9px) saturate(1.15); transform:scale(1.16); will-change:transform, filter;}
 
 /* Scroll-in reveal — the hero itself is excluded so it never starts hidden. */
 .reveal{opacity:0; transform:translateY(22px); transition:opacity .7s cubic-bezier(.2,.7,.3,1), transform .7s cubic-bezier(.2,.7,.3,1);}
@@ -151,8 +154,8 @@ nav.links a.active,nav.links a:hover{color:var(--teal-deep);}
 .hero-bg-overlay{
   position:absolute; inset:0;
   background:
-    radial-gradient(ellipse 62% 58% at 50% 46%, rgba(12,26,35,0.62) 0%, rgba(12,26,35,0.30) 55%, rgba(12,26,35,0) 100%),
-    linear-gradient(165deg, rgba(21,42,55,0.46) 0%, rgba(31,59,77,0.34) 55%, rgba(33,65,79,0.30) 100%);
+    radial-gradient(ellipse 60% 54% at 50% 45%, rgba(10,24,33,0.42) 0%, rgba(10,24,33,0.16) 60%, rgba(10,24,33,0) 100%),
+    linear-gradient(165deg, rgba(21,42,55,0.52) 0%, rgba(28,74,96,0.42) 45%, rgba(33,65,79,0.46) 100%);
 }
 .hero::after{
   content:""; position:absolute; inset:0; z-index:-1; opacity:0.4;
@@ -333,20 +336,20 @@ fieldset legend{font-size:13px; font-weight:600; color:var(--slate); padding:0 6
 #formSuccess h3{font-size:22px;}
 
 /* ---------- Responsive ---------- */
-@media (max-width: 900px){
-  .hero{padding:64px 0 80px;}
-  .hero-stats{gap:18px 0;}
-  .hero-stats div{border-left:none; padding:0 18px; width:45%;}
-  .foot-grid{grid-template-columns:1fr 1fr;}
-  .process{grid-template-columns:1fr 1fr;}
-  .process div{border-bottom:1px solid var(--line);}
-  .two-col{grid-template-columns:1fr;}
-  .svc-grid{grid-template-columns:1fr;}
+/* Between tablet and desktop the pill nav runs out of room before the
+   burger appears — tighten it rather than let items wrap. */
+@media (max-width: 1080px){
+  nav.links{gap:18px;}
+  nav.links a{font-size:13.5px;}
+  .nav-cta{gap:10px;}
+  .nav-phone{font-size:12.5px; white-space:nowrap;}
+  .nav-cta .btn-primary{padding:11px 16px; font-size:13.5px; white-space:nowrap;}
+  header.site{padding:0 8px 0 18px;}
 }
-  @media (max-width: 720px){
-  .harm-grid{grid-template-columns:1fr;}
-  /* display toggle, not transform: a stuck transition must never be able
-     to leave the menu unreachable on a phone */
+/* The drawer definition lives at the SAME breakpoint that hides the nav.
+   Splitting them once left widths where the menu was hidden with no rule
+   able to reopen it. */
+@media (max-width: 940px){
   nav.links{
     display:none;
     position:fixed; inset:64px 0 auto 0; background:var(--bone); flex-direction:column;
@@ -359,6 +362,19 @@ fieldset legend{font-size:13px; font-weight:600; color:var(--slate); padding:0 6
   .burger{display:block;}
   .nav-phone{display:none;}
   .nav-call{display:block; color:var(--teal-deep); font-weight:600;}
+}
+@media (max-width: 900px){
+  .hero{padding:64px 0 80px;}
+  .hero-stats{gap:18px 0;}
+  .hero-stats div{border-left:none; padding:0 18px; width:45%;}
+  .foot-grid{grid-template-columns:1fr 1fr;}
+  .process{grid-template-columns:1fr 1fr;}
+  .process div{border-bottom:1px solid var(--line);}
+  .two-col{grid-template-columns:1fr;}
+  .svc-grid{grid-template-columns:1fr;}
+}
+  @media (max-width: 720px){
+  .harm-grid{grid-template-columns:1fr;}
   .field-row{grid-template-columns:1fr;}
   .foot-grid{grid-template-columns:1fr 1fr;}
 }
@@ -612,7 +628,7 @@ fieldset legend{font-size:13px; font-weight:600; color:var(--slate); padding:0 6
         <h3>Well water treatment</h3>
         <p class="desc">Iron, sulfur, and bacteria don't get treated by anyone but you. We test first, then size a system around the actual result.</p>
         <ul><li>Iron / manganese staining</li><li>Sulfur (rotten-egg) odor</li><li>Coliform bacteria &amp; nitrates</li></ul>
-        <div class="price-row"><span class="price">$3,000&ndash;8,000+</span><small>bundled system</small></div>
+        <div class="price-row"><span class="price">$6,500&ndash;8,000</span><small>bundled system</small></div>
       </div>
 
     </div>
@@ -834,14 +850,15 @@ document.addEventListener('DOMContentLoaded', function () {
       var clearBy = 0.45;
       var sharp   = Math.min(progress / clearBy, 1);
 
-      var blur  = 3 * (1 - sharp);            // 3px -> genuinely crisp
+      // Stays soft on purpose — 9px down to 4px. Enough movement to feel
+      // alive, never so sharp that it becomes a photo of a tap.
+      var blur  = 9 - sharp * 5;
       var shift = progress * 90;              // parallax drift, px
-      var zoom  = 1.12 - progress * 0.07;     // slow settle
+      var zoom  = 1.16 - progress * 0.07;     // slow settle
 
-      heroImg.style.filter = 'blur(' + blur.toFixed(2) + 'px)';
+      heroImg.style.filter = 'blur(' + blur.toFixed(2) + 'px) saturate(1.15)';
       heroImg.style.transform = 'translate3d(0,' + shift.toFixed(1) + 'px,0) scale(' + zoom.toFixed(3) + ')';
-      // lift the darkening wash as it sharpens so the photo actually shows
-      if (heroOverlay) heroOverlay.style.opacity = (1 - sharp * 0.32).toFixed(3);
+      if (heroOverlay) heroOverlay.style.opacity = (1 - sharp * 0.14).toFixed(3);
       ticking = false;
     };
     var onScroll = function () {
