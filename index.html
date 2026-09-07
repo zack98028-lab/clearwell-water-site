@@ -185,6 +185,19 @@ nav.links a.active,nav.links a:hover{color:var(--teal-deep);}
 
 /* ---------- ZIP lookup ---------- */
 .lookup{max-width:660px; margin:0 auto; text-align:center;}
+.addrbar{display:grid; grid-template-columns:1fr; gap:10px; max-width:440px; margin:26px auto 12px;}
+.addrbar .row2{display:grid; grid-template-columns:1fr 110px; gap:10px;}
+.addrbar input, .addrbar select{
+  width:100%; padding:15px 18px; font-family:inherit; font-size:16px;
+  border:1.5px solid var(--line); border-radius:12px; background:var(--bone-white);
+  color:var(--ink); outline:none;
+}
+.addrbar input:focus, .addrbar select:focus{border-color:var(--teal); box-shadow:0 0 0 3px rgba(74,155,142,.16);}
+.wellcheck{
+  display:flex; align-items:center; gap:9px; justify-content:center;
+  font-size:14px; color:#5a6a68; margin-bottom:16px; cursor:pointer;
+}
+.wellcheck input{width:17px; height:17px; accent-color:var(--teal-deep); cursor:pointer;}
 .zipbar{display:flex; gap:10px; max-width:440px; margin:26px auto 0; flex-wrap:wrap;}
 .zipbar input{
   flex:1; min-width:170px; padding:15px 18px; font-family:inherit; font-size:17px;
@@ -577,11 +590,26 @@ fieldset legend{font-size:13px; font-weight:600; color:var(--slate); padding:0 6
       <h2 style="font-size:clamp(28px,3.6vw,40px);">You shouldn't need a salesman in your kitchen to find out what's in your water.</h2>
       <p style="max-width:560px; margin:0 auto; color:#4d5a57;">If you're on city water, your utility already tests it and publishes the results by law. We'll read it for you and tell you what it means &mdash; free, online, nobody in your house.</p>
 
-      <div class="zipbar">
-        <input type="text" id="zipInput" inputmode="numeric" maxlength="5" placeholder="Your ZIP code" aria-label="Your ZIP code">
-        <button type="button" class="btn btn-teal" id="zipGo">Check my water</button>
+      <div class="addrbar">
+        <input type="text" id="addrInput" placeholder="Street address" aria-label="Street address" autocomplete="street-address">
+        <select id="cityInput" aria-label="City or township">
+          <option value="">City or township&hellip;</option>
+          <option>Plymouth</option>
+          <option>Canton</option>
+          <option>Northville</option>
+          <option>Salem Township</option>
+          <option>Superior Township</option>
+          <option>Ypsilanti</option>
+          <option>Livonia</option>
+          <option>Novi</option>
+          <option>South Lyon</option>
+          <option value="other">Somewhere else</option>
+        </select>
+        <input type="text" id="zipInput" inputmode="numeric" maxlength="5" placeholder="ZIP" aria-label="ZIP code" autocomplete="postal-code">
       </div>
-      <p class="zipnote">Free. No email, no phone number, no visit.</p>
+      <label class="wellcheck"><input type="checkbox" id="wellInput"> My home is on a private well</label>
+      <button type="button" class="btn btn-teal btn-xl" id="zipGo" style="margin-top:6px;">Check my water &mdash; free</button>
+      <p class="zipnote">Nothing is sent anywhere. No email, no phone number, no visit.</p>
 
       <div class="result" id="zipResult"></div>
     </div>
@@ -1169,48 +1197,75 @@ document.addEventListener('DOMContentLoaded', function () {
     ]
   };
 
-  var ZIPS = {
-    '48170':GLWA, '48187':GLWA, '48188':GLWA, '48167':GLWA, '48168':GLWA,
-    '48150':GLWA, '48152':GLWA, '48154':GLWA,
-    '48374':GLWA, '48375':GLWA, '48377':GLWA,
-    '48197':YCUA, '48198':YCUA,
-    '48175':WELL, '48178':WELL, '48105':WELL
+  // Keyed on municipality, not ZIP. A ZIP crosses town lines and tells you
+  // nothing reliable about who treats the water; the town is what actually
+  // determines the utility, and these are verified from each town's own
+  // published water reports.
+  var TOWNS = {
+    'Plymouth':          GLWA,
+    'Canton':            GLWA,
+    'Northville':        GLWA,
+    'Livonia':           GLWA,
+    'Novi':              GLWA,
+    'Ypsilanti':         YCUA,
+    'Salem Township':    WELL,
+    'Superior Township': WELL,
+    'South Lyon':        WELL
   };
 
-  var zipGo    = document.getElementById('zipGo');
-  var zipInput = document.getElementById('zipInput');
-  var zipBox   = document.getElementById('zipResult');
+  var zipGo     = document.getElementById('zipGo');
+  var zipInput  = document.getElementById('zipInput');
+  var addrInput = document.getElementById('addrInput');
+  var cityInput = document.getElementById('cityInput');
+  var wellInput = document.getElementById('wellInput');
+  var zipBox    = document.getElementById('zipResult');
 
   function ewgLink(zip){
     return 'https://www.ewg.org/tapwater/search-results.php?zip5=' + zip + '&searchtype=zip';
   }
 
+  function esc(s){
+    return String(s).replace(/[&<>"]/g, function (c) {
+      return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c];
+    });
+  }
+
   function renderZip(){
-    var zip = (zipInput.value || '').replace(/\D/g, '').slice(0, 5);
-    if (zip.length !== 5) {
+    var addr = (addrInput.value || '').trim();
+    var city = cityInput.value;
+    var zip  = (zipInput.value || '').replace(/\D/g, '').slice(0, 5);
+    var saidWell = wellInput.checked;
+
+    if (!city) {
       zipBox.className = 'result on';
-      zipBox.innerHTML = '<h3>That does not look like a ZIP code.</h3>' +
-        '<p class="sys">Enter five digits — for example 48170.</p>';
+      zipBox.innerHTML = '<h3>Which town are you in?</h3>' +
+        '<p class="sys">Your town is what decides who treats your water, so we need that one to give you a straight answer.</p>';
       return;
     }
 
-    var d = ZIPS[zip];
-    var known = !!d;
+    // The homeowner's own answer beats any lookup — a well in Plymouth is
+    // still a well.
+    var d = saidWell ? WELL : TOWNS[city];
+
     if (!d) {
       d = {
         kind:'unknown',
-        system:'We do not have this ZIP mapped',
+        system:'Outside the area we know well',
         lines:[
-          ['warn','<b>This is outside the area we know well.</b> We stay close to home on purpose, so we would rather point you at the real data than guess at what is in your water.'],
-          ['ok','<b>Your utility still has to publish its results.</b> The link below pulls the testing data for your ZIP so you can read it yourself.']
+          ['warn','<b>We would rather point you at real data than guess.</b> We stay close to home on purpose, and we do not know your water system well enough to tell you about it honestly.'],
+          ['ok','<b>Your utility still has to publish its results by law.</b> The link below pulls the actual testing data so you can read it yourself.']
         ]
       };
     }
 
     var isWell = d.kind === 'well';
+    var where  = addr ? esc(addr) + ', ' + esc(city) : esc(city);
+
     var head = isWell
-      ? 'A lot of homes in ' + zip + ' are on well water.'
-      : (d.kind === 'unknown' ? 'ZIP ' + zip : "Here's what's in the water in " + zip + '.');
+      ? (saidWell ? 'Your well has no published record — and that is the point.'
+                  : 'Many homes in ' + esc(city) + ' are on private wells.')
+      : (d.kind === 'unknown' ? "We don't know your water well enough to tell you."
+                              : "Here's what's in the water at " + where + '.');
 
     var items = d.lines.map(function (l) {
       var ok = l[0] === 'ok';
@@ -1228,8 +1283,10 @@ document.addEventListener('DOMContentLoaded', function () {
       '<p class="sys">' + d.system + '</p>' +
       '<ul>' + items + '</ul>' +
       (isWell
-        ? '<p style="font-size:14px; color:#4d5a57;">The test is free and there is no obligation after it. If your home here is actually on city water, tell us when you book &mdash; we will read your utility\'s published results instead and skip the visit entirely.</p>'
-        : '<p style="font-size:14px; color:#4d5a57;">Want the raw numbers? The Environmental Working Group publishes your utility\'s own test results — <a href="' + ewgLink(zip) + '" target="_blank" rel="noopener" style="color:var(--teal-deep); font-weight:600;">see the full report for ' + zip + '</a>.</p>') +
+        ? '<p style="font-size:14px; color:#4d5a57;">The test is free and there is no obligation after it. If this address is actually on city water, tell us when you book &mdash; we will read your utility\'s published results instead and skip the visit entirely.</p>'
+        : '<p style="font-size:14px; color:#4d5a57;">Don\'t take our word for it &mdash; read the testing data yourself. ' +
+          (zip ? '<a href="' + ewgLink(zip) + '" target="_blank" rel="noopener" style="color:var(--teal-deep); font-weight:600;">Independent report for ' + esc(zip) + '</a>, and your ' : 'Your ') +
+          '<a href="https://www.michigan.gov/egle/about/organization/drinking-water-and-environmental-health" target="_blank" rel="noopener" style="color:var(--teal-deep); font-weight:600;">town publishes an annual water quality report</a> by law.</p>') +
       '<div class="acts">' + cta +
         '<a href="tel:+17343065475" class="btn btn-outline">Or just call us</a>' +
       '</div>';
@@ -1238,6 +1295,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (zipGo) {
     zipGo.addEventListener('click', renderZip);
+    cityInput.addEventListener('change', function () {
+      if (zipBox.classList.contains('on')) renderZip();
+    });
+    wellInput.addEventListener('change', function () {
+      if (zipBox.classList.contains('on')) renderZip();
+    });
     zipInput.addEventListener('keydown', function (e) {
       if (e.key === 'Enter') { e.preventDefault(); renderZip(); }
     });
