@@ -297,6 +297,14 @@ header.site .nav{max-width:var(--max); margin:0 auto; padding:14px 28px; display
 .slot:hover{border-color:var(--teal);}
 .slot.on{background:var(--slate); border-color:var(--slate); color:#fff;}
 
+.photo-tip{
+  max-width:440px; margin:6px auto 0; text-align:left; font-size:14px; line-height:1.55;
+  background:rgba(74,155,142,.09); border:1px solid rgba(74,155,142,.28);
+  border-radius:14px; padding:16px 18px; color:#40514e;
+}
+.photo-tip strong{color:var(--slate);}
+.photo-tip a{color:var(--teal-deep); font-weight:600;}
+
 /* ---------- Buttons ---------- */
 .actions{
   display:flex; flex-direction:row-reverse; gap:12px;
@@ -706,6 +714,45 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
           <button type="button" class="slot">5:00 PM</button>
           <button type="button" class="slot">I'm flexible</button>
         </div>
+      </div>
+
+      <input type="hidden" id="fadult"  name="Adult Home">
+      <input type="hidden" id="fpets"   name="Pets">
+      <input type="hidden" id="fbuilt"  name="Home Age">
+
+      <div class="qblock">
+        <span class="qlabel">Who'll be home?<small>Someone 18 or over has to be there for the install</small></span>
+        <div class="pills" data-single="fadult">
+          <button type="button" class="pill">I will</button>
+          <button type="button" class="pill">Another adult</button>
+          <button type="button" class="pill">Need to arrange it</button>
+        </div>
+      </div>
+
+      <div class="qblock">
+        <span class="qlabel">Any pets we should know about?<small>So we don't let anything out the door</small></span>
+        <div class="pills" data-single="fpets">
+          <button type="button" class="pill">No pets</button>
+          <button type="button" class="pill">Dog</button>
+          <button type="button" class="pill">Cat</button>
+          <button type="button" class="pill">Both</button>
+        </div>
+      </div>
+
+      <div class="qblock">
+        <span class="qlabel">Roughly when was the house built?<small>Older plumbing changes what fittings we bring &mdash; and how likely lead is</small></span>
+        <div class="pills" data-single="fbuilt">
+          <button type="button" class="pill">Before 1950</button>
+          <button type="button" class="pill">1950&ndash;1985</button>
+          <button type="button" class="pill">1986&ndash;2005</button>
+          <button type="button" class="pill">After 2005</button>
+          <button type="button" class="pill">Not sure</button>
+        </div>
+      </div>
+
+      <div class="photo-tip">
+        <strong>One thing that really helps:</strong> text a photo of where the system will go &mdash; and of your main water line if you can find it &mdash; to
+        <a href="sms:+17343065475">(734) 306-5475</a>. It means we turn up with the right parts the first time.
       </div>
       <div class="field">
         <label for="fnotes">Anything we should know? <span style="font-weight:400; color:#8f9793;">(optional)</span></label>
@@ -1133,6 +1180,9 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
       'ZIP checked': val('fzipchk') || '',
       'Preferred Date': val('fdate') ? prettyDate(val('fdate')) : '',
       'Preferred Time': val('ftime') || '',
+      'Adult Home': val('fadult') || '',
+      Pets: val('fpets') || '',
+      'Home Age': val('fbuilt') || '',
       Notes: val('fnotes') || '',
       Source: 'Clearwell website — quote flow'
     };
@@ -1180,6 +1230,9 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
       ['Address', [val('faddr'), val('fcity'), val('fzip')].filter(Boolean).join(', ')],
       ['Date',    prettyDate(val('fdate'))],
       ['Time',    val('ftime')],
+      ['Who\'s home', val('fadult')],
+      ['Pets',    val('fpets')],
+      ['Home age', val('fbuilt')],
       ['Notes',   val('fnotes')]
     ];
     document.getElementById('review').innerHTML = rows
