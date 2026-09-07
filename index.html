@@ -1115,15 +1115,15 @@ document.addEventListener('DOMContentLoaded', function () {
       var clearBy = 0.45;
       var sharp   = Math.min(progress / clearBy, 1);
 
-      // Stays soft on purpose — 9px down to 4px. Enough movement to feel
-      // alive, never so sharp that it becomes a photo of a tap.
-      var blur  = 9 - sharp * 5;
+      // Starts soft, ends as an actual photograph — all the way to zero.
+      var blur  = 9 * (1 - sharp);
       var shift = progress * 90;              // parallax drift, px
       var zoom  = 1.16 - progress * 0.07;     // slow settle
 
       heroImg.style.filter = 'blur(' + blur.toFixed(2) + 'px) saturate(1.15)';
       heroImg.style.transform = 'translate3d(0,' + shift.toFixed(1) + 'px,0) scale(' + zoom.toFixed(3) + ')';
-      if (heroOverlay) heroOverlay.style.opacity = (1 - sharp * 0.14).toFixed(3);
+      // lift the scrim as it sharpens so the photo actually shows through
+      if (heroOverlay) heroOverlay.style.opacity = (1 - sharp * 0.42).toFixed(3);
       ticking = false;
     };
     var onScroll = function () {
