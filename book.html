@@ -379,10 +379,7 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
 </div>
 
 <div class="stage" id="stage">
-  <form id="bookForm" action="https://api.web3forms.com/submit" method="POST" novalidate>
-    <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
-    <input type="hidden" name="subject" value="New quote request - Clearwell Water">
-    <input type="hidden" name="from_name" value="Clearwell Water website">
+  <form id="bookForm" method="POST" novalidate>
 
     <!-- 0 — name -->
     <section class="step on" data-step="0" data-stage="0">
@@ -772,6 +769,12 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
     });
   }
 
+  // ---------------------------------------------------------------------
+  // WHERE LEADS GO. Change this one address and every submission on this
+  // page follows it. Same service ServiceNest already uses.
+  // ---------------------------------------------------------------------
+  var LEAD_ENDPOINT = 'https://formsubmit.co/ajax/sharbinsajadpour2007@gmail.com';
+
   var form   = document.getElementById('bookForm');
   var stage  = document.getElementById('stage');
   var steps  = Array.prototype.slice.call(form.querySelectorAll('.step'));
@@ -1103,40 +1106,53 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
   // ---- Partial capture: a lead that walks away still lands in the inbox ----
   var completed = false, partialSent = false;
 
+  // Every field we have, as a plain object for the email body.
+  function payload(status, subject){
+    var o = {
+      _subject: subject,
+      _template: 'table',
+      _captcha: 'false',
+      Status: status,
+      Name: val('fname') || 'Not provided',
+      Phone: val('fphone') || 'Not provided',
+      Email: val('femail') || 'Not provided',
+      'Water Source': picked('Water Source') || 'Not provided',
+      Service: service() || 'Not chosen yet',
+      'Household Size': val('fpeople') || '',
+      'Water Symptoms': val('fsymp') || '',
+      'Well Tested Recently': val('ftested') || '',
+      'Install Location': val('floc') || '',
+      'Existing Equipment': val('fexist') || '',
+      'Main Line Size': val('fpipe') || '',
+      'Drain Nearby': val('fdrain') || '',
+      'Outlet Nearby': val('foutlet') || '',
+      Access: val('faccess') || '',
+      Address: val('faddr') || '',
+      City: val('fcity') || '',
+      ZIP: val('fzip') || '',
+      'ZIP checked': val('fzipchk') || '',
+      'Preferred Date': val('fdate') ? prettyDate(val('fdate')) : '',
+      'Preferred Time': val('ftime') || '',
+      Notes: val('fnotes') || '',
+      Source: 'Clearwell website — quote flow'
+    };
+    Object.keys(o).forEach(function (k) { if (o[k] === '') delete o[k]; });
+    return o;
+  }
+
   function sendPartial(){
     if (completed || partialSent) return;
     if (!val('fname') || !val('fphone')) return;   // nothing worth sending yet
     if (!navigator.sendBeacon) return;
     partialSent = true;
 
-    var fd = new FormData();
-    fd.append('access_key', form.querySelector('[name="access_key"]').value);
-    fd.append('subject', subjectFor(false));
-    fd.append('from_name', 'Clearwell Water website');
-    fd.append('Status', 'INCOMPLETE — visitor left before finishing');
-    fd.append('Got as far as', 'Step ' + (at + 1) + ' of ' + (REVIEW + 1));
-    fd.append('Name', val('fname'));
-    fd.append('Phone', val('fphone'));
-    if (val('femail'))          fd.append('Email', val('femail'));
-    if (picked('Water Source')) fd.append('Water Source', picked('Water Source'));
-    if (service())              fd.append('Service', service());
-    if (val('fpeople'))         fd.append('Household Size', val('fpeople'));
-    if (val('fsymp'))           fd.append('Water Symptoms', val('fsymp'));
-    if (val('ftested'))         fd.append('Well Tested Recently', val('ftested'));
-    if (val('floc'))            fd.append('Install Location', val('floc'));
-    if (val('fexist'))          fd.append('Existing Equipment', val('fexist'));
-    if (val('fpipe'))           fd.append('Main Line Size', val('fpipe'));
-    if (val('fdrain'))          fd.append('Drain Nearby', val('fdrain'));
-    if (val('foutlet'))         fd.append('Outlet Nearby', val('foutlet'));
-    if (val('faccess'))         fd.append('Access', val('faccess'));
-    if (val('faddr'))           fd.append('Address', val('faddr'));
-    if (val('fcity'))           fd.append('City', val('fcity'));
-    if (val('fzip'))            fd.append('ZIP', val('fzip'));
-    if (val('fdate'))           fd.append('Preferred Date', prettyDate(val('fdate')));
-    if (val('ftime'))           fd.append('Preferred Time', val('ftime'));
-    if (val('fnotes'))          fd.append('Notes', val('fnotes'));
+    var body = payload('INCOMPLETE — visitor left before finishing', subjectFor(false));
+    body['Got as far as'] = 'Step ' + (at + 1) + ' of ' + (REVIEW + 1);
 
-    navigator.sendBeacon('https://api.web3forms.com/submit', fd);
+    navigator.sendBeacon(
+      LEAD_ENDPOINT,
+      new Blob([JSON.stringify(body)], { type:'application/json' })
+    );
   }
 
   window.addEventListener('pagehide', sendPartial);
@@ -1223,17 +1239,20 @@ footer.site a{color:var(--stone-light); text-decoration:none;}
     btn.disabled = true;
     btn.textContent = 'Sending…';
 
-    var fd = new FormData(form);
-    fd.set('subject', subjectFor(true));
-    fd.set('Status', 'COMPLETE — submitted from the website');
-    if (val('fdate'))  fd.set('Preferred Date', prettyDate(val('fdate')));
+    var body = payload('COMPLETE — submitted from the website', subjectFor(true));
     // so hitting reply in the inbox goes back to the customer
-    if (val('femail')) fd.set('replyto', val('femail'));
+    if (val('femail')) body._replyto = val('femail');
 
-    fetch(form.action, { method:'POST', body:fd })
+    fetch(LEAD_ENDPOINT, {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json', 'Accept':'application/json' },
+      body: JSON.stringify(body)
+    })
       .then(function (r) { return r.json(); })
       .then(function (data) {
-        if (!data.success) throw new Error(data.message || 'Submit failed');
+        // formsubmit returns success as the string "true"
+        var ok = data.success === true || data.success === 'true';
+        if (!ok) throw new Error(data.message || 'Submit failed');
         completed = true;
         // Set expectations honestly: a well job can't be sized without testing
         // first, so it's two visits. A city softener is usually one.
