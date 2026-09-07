@@ -93,9 +93,11 @@ header.site{
   box-shadow:0 8px 28px rgba(21,42,55,0.08);
   padding:0 8px 0 26px;
 }
-.nav{display:flex; align-items:center; justify-content:space-between; padding:10px 0;}
+/* gap, not just space-between: when the pill runs short of room the items
+   were butting into each other instead of staying legible. */
+.nav{display:flex; align-items:center; justify-content:space-between; gap:28px; padding:10px 0;}
 .logo{
-  display:flex; align-items:center; gap:10px;
+  display:flex; align-items:center; gap:10px; flex:none;
   font-family:'Fraunces', serif; font-weight:500; font-size:20px; color:var(--slate);
   text-decoration:none;
 }
@@ -105,14 +107,14 @@ header.site{
   display:block; font-family:'Inter'; font-weight:600; font-size:9px;
   letter-spacing:0.16em; color:var(--teal-deep); margin-top:-2px;
 }
-nav.links{display:flex; align-items:center; gap:30px;}
+nav.links{display:flex; align-items:center; gap:30px; flex:none;}
 nav.links a{
   text-decoration:none; color:var(--slate); font-size:14px; font-weight:500;
-  position:relative; padding:4px 0;
+  position:relative; padding:4px 0; white-space:nowrap;
 }
 nav.links a.active,nav.links a:hover{color:var(--teal-deep);}
-.nav-cta{display:flex; align-items:center; gap:14px;}
-.nav-phone{font-size:13.5px; font-weight:600; color:var(--slate); text-decoration:none;}
+.nav-cta{display:flex; align-items:center; gap:16px; flex:none;}
+.nav-phone{font-size:13.5px; font-weight:600; color:var(--slate); text-decoration:none; white-space:nowrap;}
 .nav-cta .btn-primary{border-radius:40px; padding:12px 22px;}
 .burger{display:none; background:none; border:none; cursor:pointer; padding:6px;}
 .burger span{display:block; width:22px; height:2px; background:var(--slate); margin:5px 0;}
@@ -424,7 +426,7 @@ fieldset legend{font-size:13px; font-weight:600; color:var(--slate); padding:0 6
 /* ---------- Responsive ---------- */
 /* Between tablet and desktop the pill nav runs out of room before the
    burger appears — tighten it rather than let items wrap. */
-@media (max-width: 1080px){
+@media (max-width: 1240px){
   nav.links{gap:18px;}
   nav.links a{font-size:13.5px;}
   .nav-cta{gap:10px;}
@@ -447,7 +449,7 @@ fieldset legend{font-size:13px; font-weight:600; color:var(--slate); padding:0 6
   .hero-actions{flex-direction:column; align-items:stretch;}
   .hero-actions .btn{width:100%;}
 }
-@media (max-width: 940px){
+@media (max-width: 1080px){
   nav.links{
     display:none;
     position:fixed; inset:64px 0 auto 0; background:var(--bone); flex-direction:column;
