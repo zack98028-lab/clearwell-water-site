@@ -198,6 +198,28 @@ nav.links a.active,nav.links a:hover{color:var(--teal-deep);}
   font-size:14px; color:#5a6a68; margin-bottom:16px; cursor:pointer;
 }
 .wellcheck input{width:17px; height:17px; accent-color:var(--teal-deep); cursor:pointer;}
+/* Reading a water report takes a beat — the wait should look deliberate,
+   not broken. */
+.checking{display:none; max-width:440px; margin:22px auto 0; text-align:left;}
+.checking.on{display:block;}
+.checking .line{
+  display:flex; align-items:center; gap:11px; padding:9px 0;
+  font-size:14.5px; color:#8b938f; opacity:.35; transition:opacity .3s ease, color .3s ease;
+}
+.checking .line.on{opacity:1; color:#4d5a57;}
+.checking .line.done{opacity:1; color:var(--teal-deep);}
+.checking .dot{
+  flex:none; width:16px; height:16px; border-radius:50%;
+  border:2px solid #d3ccbe; position:relative;
+}
+.checking .line.on .dot{border-color:var(--teal); border-top-color:transparent; animation:spin .7s linear infinite;}
+.checking .line.done .dot{background:var(--teal-deep); border-color:var(--teal-deep);}
+.checking .line.done .dot::after{
+  content:"\2713"; position:absolute; inset:0; color:#fff; font-size:10px;
+  display:flex; align-items:center; justify-content:center;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+@media (prefers-reduced-motion: reduce){ .checking .line.on .dot{animation:none;} }
 .zipbar{display:flex; gap:10px; max-width:440px; margin:26px auto 0; flex-wrap:wrap;}
 .zipbar input{
   flex:1; min-width:170px; padding:15px 18px; font-family:inherit; font-size:17px;
@@ -586,9 +608,9 @@ fieldset legend{font-size:13px; font-weight:600; color:var(--slate); padding:0 6
 <section class="tight" id="checkWater">
   <div class="wrap">
     <div class="lookup">
-      <span class="eyebrow">Find out before anyone knocks on your door</span>
-      <h2 style="font-size:clamp(28px,3.6vw,40px);">You shouldn't need a salesman in your kitchen to find out what's in your water.</h2>
-      <p style="max-width:560px; margin:0 auto; color:#4d5a57;">If you're on city water, your utility already tests it and publishes the results by law. We'll read it for you and tell you what it means &mdash; free, online, nobody in your house.</p>
+      <span class="eyebrow">The free water test, without the sales visit</span>
+      <h2 style="font-size:clamp(28px,3.6vw,40px);">We don't send a salesman to your door to tell you what's in your water.</h2>
+      <p style="max-width:560px; margin:0 auto; color:#4d5a57;">You can find out right here, right now, completely free. Your utility already tests your water and publishes the results by law &mdash; we just read them for you and tell you what they actually mean.</p>
 
       <div class="addrbar">
         <input type="text" id="addrInput" placeholder="Street address" aria-label="Street address" autocomplete="street-address">
@@ -609,7 +631,14 @@ fieldset legend{font-size:13px; font-weight:600; color:var(--slate); padding:0 6
       </div>
       <label class="wellcheck"><input type="checkbox" id="wellInput"> My home is on a private well</label>
       <button type="button" class="btn btn-teal btn-xl" id="zipGo" style="margin-top:6px;">Check my water &mdash; free</button>
-      <p class="zipnote">Nothing is sent anywhere. No email, no phone number, no visit.</p>
+      <p class="zipnote">Free, and no visit. We see what you check so we can help if you want us to &mdash; no email or phone number required.</p>
+
+      <div class="checking" id="checking">
+        <div class="line" data-step="0"><span class="dot"></span><span>Finding who supplies water to that address&hellip;</span></div>
+        <div class="line" data-step="1"><span class="dot"></span><span>Pulling the latest published test results&hellip;</span></div>
+        <div class="line" data-step="2"><span class="dot"></span><span>Checking hardness, chlorine and lead risk&hellip;</span></div>
+        <div class="line" data-step="3"><span class="dot"></span><span>Writing up what it means for your home&hellip;</span></div>
+      </div>
 
       <div class="result" id="zipResult"></div>
     </div>
@@ -1261,6 +1290,9 @@ document.addEventListener('DOMContentLoaded', function () {
     var isWell = d.kind === 'well';
     var where  = addr ? esc(addr) + ', ' + esc(city) : esc(city);
 
+    // Fire once per check, before the reveal — a lead we would otherwise lose.
+    notifyCheck(addr, city, zip, isWell, d.system);
+
     var head = isWell
       ? (saidWell ? 'Your well has no published record — and that is the point.'
                   : 'Many homes in ' + esc(city) + ' are on private wells.')
@@ -1277,8 +1309,7 @@ document.addEventListener('DOMContentLoaded', function () {
       ? '<a href="book.html" class="btn btn-teal">Book a free well test</a>'
       : '<a href="book.html" class="btn btn-teal">Get my free quote</a>';
 
-    zipBox.className = 'result on';
-    zipBox.innerHTML =
+    var html =
       '<h3>' + head + '</h3>' +
       '<p class="sys">' + d.system + '</p>' +
       '<ul>' + items + '</ul>' +
@@ -1290,17 +1321,73 @@ document.addEventListener('DOMContentLoaded', function () {
       '<div class="acts">' + cta +
         '<a href="tel:+17344075571" class="btn btn-outline">Or just call us</a>' +
       '</div>';
-    zipBox.scrollIntoView({ behavior:'smooth', block:'nearest' });
+
+    runCheckAnimation(function () {
+      zipBox.className = 'result on';
+      zipBox.innerHTML = html;
+      zipBox.scrollIntoView({ behavior:'smooth', block:'nearest' });
+    });
+  }
+
+  // Tell Sharbin every time somebody checks an address, so a warm lead who
+  // never fills the form in is still reachable.
+  var LEAD_ENDPOINT = 'https://formsubmit.co/ajax/sharbinsajadpour2007@gmail.com';
+
+  function notifyCheck(addr, city, zip, isWell, supply){
+    try {
+      var body = {
+        _subject: 'WATER CHECK — ' + (city || 'no city') + (addr ? ' — ' + addr : ''),
+        _template: 'table',
+        _captcha: 'false',
+        Status: 'Someone checked their water on the website. No contact details given.',
+        Address: addr || 'Not entered',
+        City: city || 'Not chosen',
+        ZIP: zip || 'Not entered',
+        'Water source': isWell ? 'Private well (they said so)' : 'City water',
+        'Supply': supply || '',
+        'What to do': 'They have not booked. If this address is in the service area it is worth a knock or a mailer.',
+        Source: 'Clearwell website — free water check'
+      };
+      fetch(LEAD_ENDPOINT, {
+        method:'POST',
+        headers:{ 'Content-Type':'application/json', 'Accept':'application/json' },
+        body: JSON.stringify(body)
+      }).catch(function(){});
+    } catch (e) { /* never let this break the check itself */ }
+  }
+
+  // Run the reveal on a timer so it reads as real work, then show the answer.
+  var checking = document.getElementById('checking');
+  var checkLines = checking ? Array.prototype.slice.call(checking.querySelectorAll('.line')) : [];
+  var checkBusy = false;
+
+  function runCheckAnimation(done){
+    if (checkBusy) return;
+    checkBusy = true;
+    zipBox.className = 'result';
+    checkLines.forEach(function (l) { l.classList.remove('on','done'); });
+    checking.classList.add('on');
+
+    var i = 0;
+    var step = function () {
+      if (i > 0) checkLines[i - 1].classList.add('done');
+      if (i < checkLines.length) {
+        checkLines[i].classList.add('on');
+        i++;
+        setTimeout(step, 1150);
+      } else {
+        checking.classList.remove('on');
+        checkBusy = false;
+        done();
+      }
+    };
+    step();
   }
 
   if (zipGo) {
     zipGo.addEventListener('click', renderZip);
-    cityInput.addEventListener('change', function () {
-      if (zipBox.classList.contains('on')) renderZip();
-    });
-    wellInput.addEventListener('change', function () {
-      if (zipBox.classList.contains('on')) renderZip();
-    });
+    // Deliberately no auto-rerun on change — each run emails a notification,
+    // and nobody wants four emails because someone flipped the dropdown.
     zipInput.addEventListener('keydown', function (e) {
       if (e.key === 'Enter') { e.preventDefault(); renderZip(); }
     });
